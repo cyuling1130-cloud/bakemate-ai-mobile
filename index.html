@@ -237,7 +237,7 @@ const toolShortcutUI={
 const featuredToolIndices=toolItems.map((_,i)=>i);
 function toolImage(icon,label,bg){
   const i=toolItems.findIndex(t=>t.en===label);
-  const common='stroke="#94684e" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"';
+  const common='stroke="#94684e" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"';
   const art=[
     `<path ${common} d="M200 145V218 M200 145 C150 110 155 24 200 28 C245 24 250 110 200 145 M200 145 C175 116 172 37 200 28 C228 37 225 116 200 145 M200 145 C188 110 190 35 200 28 C210 35 212 110 200 145"/>`,
     `<path ${common} d="M190 135L165 220 M190 135 Q147 110 158 58 L174 30 Q194 20 230 42 L250 62 Q255 100 211 130Z" fill="#d9a98d"/>`,
@@ -252,7 +252,7 @@ function toolImage(icon,label,bg){
     `<ellipse cx="200" cy="164" rx="94" ry="23" stroke="#94684e" stroke-width="8" fill="#e5d4c5"/><path ${common} d="M173 184V209M227 184V209M145 216H255"/><ellipse cx="200" cy="134" rx="75" ry="27" stroke="#94684e" stroke-width="7" fill="#f7e4d9"/>`,
     `<rect x="139" y="51" width="122" height="141" rx="9" fill="#c6b7a9" stroke="#94684e" stroke-width="8"/><rect x="154" y="65" width="92" height="111" rx="5" fill="#eee4d8" stroke="#94684e" stroke-width="5"/>`
   ][i]||'';
-  const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="400" height="240" viewBox="0 0 400 240"><rect width="400" height="240" rx="24" fill="${bg||'#f1dfcf'}"/><circle cx="320" cy="47" r="50" fill="#fff9ef" opacity=".5"/>${art}</svg>`;
+  const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="400" height="240" viewBox="0 0 400 240" fill="none"><rect width="400" height="240" rx="24" fill="${bg||'#f1dfcf'}"/><circle cx="320" cy="47" r="50" fill="#fff9ef" opacity=".5"/>${art}</svg>`;
   return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(svg);
 }
 function renderPresetCards(){
