@@ -1,0 +1,709 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f7ebdf">
+<title>BakeMate AI | Your Sweet Baking Companion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Yomogi&family=Ma+Shan+Zheng&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7ebdf;--paper:#fffdf9;--brown:#815942;--dark:#5b3a29;--sub:#8e715f;--line:#e9d8c9;--soft:#f6eee6}
+:root{--font-rounded:"Zen Maru Gothic","Arial Rounded MT Bold","Noto Sans TC",sans-serif;--font-script:"Caveat","Brush Script MT","Segoe Script",cursive;--font-script-zh:"晨宇落雁體","ChenYuluoyan","HanziPen TC","DFKai-SB","KaiTi TC","BiauKai","Ma Shan Zheng",cursive;--font-script-ja:"Yomogi","Hiragino Maru Gothic ProN","Yu Gothic",sans-serif;}
+body.lang-zh, body.lang-ja{font-family:var(--font-rounded)}
+body.lang-en .script-font, body.lang-ko .script-font, body.lang-th .script-font, body.lang-vi .script-font{font-family:var(--font-script)}
+body.lang-zh .script-font{font-family:var(--font-script-zh)}
+body.lang-ja .script-font{font-family:var(--font-script-ja)}
+.page-title-fancy{font-family:var(--font-rounded)}
+.polaroid-caption.script-font{font-size:28px;line-height:1.05;letter-spacing:.3px}
+.custom-caption-wrap{margin-top:10px;padding:10px;border:1px dashed var(--line);border-radius:13px;background:#fff}
+.custom-caption-wrap input{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px 13px;background:#fffdfb;color:var(--dark)}
+.custom-caption-wrap small{display:block;color:var(--sub);margin-top:7px;line-height:1.45}
+
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif;color:var(--dark);background:var(--bg)}button,textarea,select{font:inherit}button{cursor:pointer}main{width:min(100%,500px);margin:auto;min-height:100dvh;background:var(--paper);padding:20px 20px max(22px,env(safe-area-inset-bottom))}
+header{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:24px}.brand{font-weight:800;font-size:19px}.brand span{color:#be8d6e}.smallbtn{border:1px solid var(--line);border-radius:14px;background:white;padding:9px 12px;color:var(--brown)}
+h1{font-family:Georgia,serif;font-size:31px;line-height:1.16;margin:8px 0 14px}h2{font-size:23px;margin:0 0 8px}.muted{color:var(--sub);line-height:1.6}.eyebrow{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--sub)}
+.page{display:none;animation:fade .2s ease}.page.active{display:block}@keyframes fade{from{opacity:.5;transform:translateY(6px)}to{opacity:1;transform:none}}
+.hero{border-radius:22px;padding:26px 20px;background:linear-gradient(140deg,#edd4bd,#fbede2);margin-bottom:22px;text-align:center}.cake{font-size:70px;display:block;margin:15px 0}.lang{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:15px;padding:14px;margin:9px 0;color:var(--dark)}.lang.selected{background:#f2e1d1;border:2px solid var(--brown);padding:13px}.flag{font-size:26px}.lang small{display:block;color:var(--sub);margin-top:2px}.tick{margin-left:auto}
+.primary{width:100%;border:0;background:var(--brown);color:#fff;font-weight:700;border-radius:15px;padding:16px;margin-top:13px}.secondary{width:100%;border:1px solid var(--brown);background:transparent;color:var(--brown);font-weight:650;border-radius:15px;padding:13px;margin-top:10px}.primary:disabled{opacity:.45}.card{border-radius:17px;background:var(--soft);padding:17px;margin:12px 0}.card strong{display:block;margin-bottom:5px}.menu{display:grid;grid-template-columns:1fr 1fr;gap:12px}.tile{border:1px solid var(--line);border-radius:17px;text-align:left;background:var(--soft);padding:19px 15px;min-height:120px;color:var(--dark)}.tile .icon{font-size:26px;display:block;margin-bottom:16px}.tile b{font-size:14px}
+.wide{width:100%;text-align:left;border:0;border-radius:18px;background:var(--brown);color:#fff;padding:21px;margin:10px 0 15px}.wide span{display:block;color:#f6e8dc;font-size:12px;margin-top:7px}
+.tool-shortcut{background:var(--soft);color:var(--dark);border:1px solid var(--line);margin-top:0}.tool-shortcut span{color:var(--sub)}
+.back{padding:7px 0 20px;background:none;border:0;color:var(--brown);font-weight:650}.chiprow{display:flex;flex-wrap:wrap;gap:8px;margin:15px 0}.chip{border:1px solid var(--line);background:#fff;border-radius:30px;padding:9px 13px;color:var(--brown)}.chip.on{background:var(--brown);color:white}.faq{width:100%;border:1px solid var(--line);border-radius:13px;background:var(--soft);padding:14px;margin:6px 0;text-align:left;color:var(--dark)}.answer{display:none;padding:8px 6px 14px;line-height:1.6;color:var(--sub)}.answer.show{display:block}textarea{width:100%;border:1px solid var(--line);border-radius:14px;padding:14px;min-height:110px;resize:vertical;background:white;color:var(--dark)}.note{font-size:12px;color:var(--sub);line-height:1.6}.translation{border:2px solid var(--brown);border-radius:15px;padding:20px;line-height:1.6;overflow-wrap:anywhere;background:var(--soft)}.photobox{border:2px dashed var(--line);border-radius:15px;padding:25px 12px;text-align:center}.photobox img{max-width:100%;max-height:300px;display:block;margin:12px auto;border-radius:10px}.chat-history{display:flex;flex-direction:column;gap:10px;margin:12px 0}.bubble{border-radius:15px;padding:12px;line-height:1.55;max-width:92%;white-space:pre-wrap;overflow-wrap:anywhere}.bubble.user{align-self:flex-end;background:#865c43;color:white}.bubble.assistant{align-self:flex-start;background:#f4e8db;color:#5b3a29}.bubble small{display:block;font-size:11px;opacity:.8;margin-bottom:5px}.chat-help{font-size:12px;color:var(--sub)}footer{text-align:center;font-size:11px;color:var(--sub);margin-top:40px}
+
+.tool-gallery{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:13px 0}.tool-pick{border:1px solid var(--line);background:#fff;border-radius:13px;padding:12px;text-align:left;color:var(--dark)}.tool-pick.active{border:2px solid var(--brown);background:var(--soft)}.tool-pick small{display:block;color:var(--sub);padding-top:4px}.reference-photo{width:100%;height:190px;object-fit:cover;border-radius:14px;background:#f3e7d9}.source{font-size:11px;margin:4px 0 17px;overflow-wrap:anywhere}.source a{color:var(--sub)}.preset-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0 18px}.preset-card{border:1px solid var(--line);background:#fff;border-radius:16px;padding:10px;text-align:left;color:var(--dark)}.preset-card.active{border:2px solid var(--brown);background:var(--soft)}.preset-card img{width:100%;height:88px;object-fit:cover;border-radius:12px;background:#f6eee6;display:block;margin-bottom:8px}.preset-card b{display:block;font-size:14px}.preset-card small{display:block;color:var(--sub);margin-top:4px;line-height:1.35}
+
+.memory-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0 16px}
+.option-card{border:1px solid var(--line);background:#fff;border-radius:14px;padding:11px;text-align:left;color:var(--dark)}
+.option-card.active{border:2px solid var(--brown);background:var(--soft)}
+.option-card b{display:block;font-size:14px}.option-card small{display:block;color:var(--sub);line-height:1.35;margin-top:4px}
+.sticker-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px}
+.sticker-btn{border:1px solid var(--line);border-radius:14px;background:#fff;padding:12px 0;font-size:26px}
+.sticker-btn.active{border:2px solid var(--brown);background:var(--soft)}
+.caption-list{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.caption-btn{border:1px solid var(--line);border-radius:13px;background:#fff;padding:11px 12px;text-align:left;color:var(--dark)}
+.caption-btn.active{border:2px solid var(--brown);background:var(--soft)}
+.polaroid-wrap{display:flex;justify-content:center;margin:14px 0}
+.polaroid-card{position:relative;width:260px;background:#fff;border-radius:8px;padding:12px 12px 22px;box-shadow:0 10px 25px rgba(72,43,28,.12)}
+.polaroid-card.frame-classic{background:#fff}
+.polaroid-card.frame-cream{background:#fff8f0;border:3px solid #ead6c3}
+.polaroid-card.frame-caramel{background:#fff6ee;border:3px solid #d7b39a}
+.polaroid-card.frame-cute{background:#fff7fb;border:3px solid #f0cddd}
+.polaroid-photo{height:230px;border-radius:6px;background:linear-gradient(135deg,#f8e8db,#ead2c2);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.polaroid-photo img{width:100%;height:100%;object-fit:cover;display:block}
+[hidden]{display:none!important}
+.polaroid-placeholder{text-align:center;color:#87695a;padding:0 16px;line-height:1.5;font-weight:650}
+.polaroid-caption{margin-top:12px;text-align:center;font-weight:800;font-size:18px;color:#6a4835;font-family:Georgia,serif}
+.polaroid-sub{margin-top:6px;text-align:center;font-size:12px;color:var(--sub)}
+.stick{position:absolute;font-size:30px;filter:drop-shadow(0 2px 2px rgba(0,0,0,.08))}
+.stick.s1{top:-10px;left:-6px}.stick.s2{top:-10px;right:-6px}.stick.s3{bottom:46px;left:-8px}.stick.s4{bottom:46px;right:-8px}
+.upload-inline{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.upload-inline input{max-width:100%}
+
+
+.option-card .frame-thumb{width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:12px;border:1px solid var(--line);display:block;margin-bottom:8px;background:#faf7f3}
+.polaroid-card{min-height:390px;position:relative;overflow:hidden}
+.polaroid-card.frame-image-mode{width:260px;height:390px;padding:0;background-size:cover;background-position:center;background-repeat:no-repeat;border-radius:18px;box-shadow:0 10px 25px rgba(72,43,28,.12)}
+.polaroid-card.frame-image-mode .polaroid-photo{position:absolute;top:5.7%;left:6.7%;width:86.6%;height:63.1%;border-radius:8px;background:transparent;border:none}
+.polaroid-card.frame-image-mode .polaroid-caption{position:absolute;left:9%;right:9%;top:74%;margin-top:0;text-align:center;font-size:26px;color:#3b2a21;text-shadow:0 1px 0 rgba(255,255,255,.35)}
+.polaroid-card.frame-image-mode .polaroid-sub{position:absolute;left:9%;right:9%;bottom:8%;text-align:center;font-size:10px;color:#6b584a}
+.polaroid-card.frame-image-mode .stick{font-size:22px}
+.polaroid-card.frame-image-mode .stick.s1{top:70%;left:8px}
+.polaroid-card.frame-image-mode .stick.s2{top:70%;right:8px}
+.polaroid-card.frame-image-mode .stick.s3{bottom:28px;left:12px}
+.polaroid-card.frame-image-mode .stick.s4{bottom:28px;right:12px}
+
+#toolsPanel[hidden],#ingredientsPanel[hidden]{display:none!important}
+#recognitionTabs .active{background:#6f4b36;color:white}
+
+.font-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.font-option{border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px;text-align:left;color:var(--dark)}
+.font-option.active{border:2px solid var(--brown);background:var(--soft)}
+.font-option b{display:block;margin-bottom:4px}.font-option small{display:block;color:var(--sub);line-height:1.4}
+.font-rounded{font-family:var(--font-rounded)}
+.font-script-ui{font-family:var(--font-script)}
+.polaroid-caption.font-script{font-family:var(--font-script);font-weight:500;font-size:28px;line-height:1.05;letter-spacing:.3px}
+body.lang-ja .polaroid-caption.font-script{font-family:var(--font-script-ja)}
+/* Only the Traditional Chinese signature selection gets this finer treatment. */
+body.lang-zh .polaroid-caption.font-signature-zh{font-family:var(--font-script-zh);font-style:normal;font-weight:400;font-size:27px;letter-spacing:1px;line-height:1.22;transform:rotate(-2deg);transform-origin:center center}
+body.lang-zh .font-option.font-script-ui{font-weight:400;letter-spacing:.4px}
+body.lang-zh .font-script-ui{font-family:var(--font-script-zh)}
+body.lang-ja .font-script-ui{font-family:var(--font-script-ja)}
+.font-serif{font-family:Georgia,'Times New Roman',serif}
+.font-clean{font-family:system-ui,-apple-system,'Noto Sans TC',sans-serif}
+.stick{cursor:grab;user-select:none;touch-action:none;transform:translate(-50%,-50%);z-index:2}
+.stick.dragging{cursor:grabbing;filter:drop-shadow(0 4px 6px rgba(0,0,0,.18));z-index:3}
+
+</style>
+</head>
+<body><main>
+<header><div class="brand">🍰 BakeMate <span>AI</span></div><button class="smallbtn" id="changeLang" onclick="go('language')" hidden>🌐 <span id="langShort">EN</span></button></header>
+<section class="page active" id="language">
+ <div class="hero"><div class="eyebrow">Your Sweet Baking Companion</div><span class="cake">🧁</span><h1>Welcome!</h1><div class="muted">Please select your language<br>請選擇您的語言</div></div>
+ <div id="languageOptions"></div>
+ <button class="primary" onclick="enterHome()">Continue →</button>
+</section>
+<section class="page" id="home">
+ <div class="hero"><span class="cake">🎂</span><div class="eyebrow">WELCOME TO BAKEMATE</div><h1 data-t="welcome"></h1><div class="muted" data-t="tagline"></div></div>
+ <button class="wide" onclick="go('help')">✦ <b data-t="aiTitle"></b><span data-t="aiSub"></span></button>
+  <button class="wide tool-shortcut" onclick="openToolGuide()">🥣 <b id="toolsShortcutTitle">Baking Tools</b><span id="toolsShortcutSub">Tap a tool to see its name and use</span></button>
+ <div class="menu">
+  <button class="tile" onclick="openHelp('general')"><span class="icon">📖</span><b data-t="faqTitle"></b></button>
+  <button class="tile" onclick="go('translate')"><span class="icon">🌐</span><b data-t="translateTitle"></b></button>
+  <button class="tile" onclick="go('photo')"><span class="icon">📷</span><b data-t="photoTitle"></b></button>
+  <button class="tile" onclick="go('staff')"><span class="icon">🙋</span><b data-t="staffTitle"></b></button>
+ </div>
+ <button class="secondary" onclick="go('finish')">🎉 <span data-t="done"></span></button>
+</section>
+<section class="page" id="help">
+ <button class="back" onclick="go('home')">← <span data-t="back"></span></button>
+ <h2 data-t="aiTitle"></h2><p class="muted" data-t="helpIntro"></p>
+ <div class="chiprow" id="categories"></div><div id="faqList"></div>
+ <div id="chatHistory" class="chat-history" aria-live="polite"></div>
+ <div class="card"><strong data-t="askTitle"></strong><textarea id="question" data-placeholder="questionPlaceholder"></textarea><button class="primary" onclick="askSmart()" id="askKnowledgeButton">💬 Ask question</button><div id="answerPanel" class="card" style="display:none" aria-live="polite"></div><button class="secondary" onclick="showStaff()" data-t="showStaff"></button><div class="note" data-t="knowledgeNote"></div></div>
+</section>
+<section class="page" id="translate">
+ <button class="back" onclick="go('home')">← <span data-t="back"></span></button>
+ <h2 data-t="translateTitle"></h2><p class="muted" data-t="translationIntro"></p>
+ <div class="card">
+ <label id="directionLabel" for="translateDirection">Translation direction</label>
+ <select id="translateDirection" style="width:100%;padding:12px;border:1px solid var(--line);border-radius:13px;margin:8px 0 12px;background:white" onchange="resetInlineTranslation()"></select>
+ <textarea id="translateText" data-placeholder="questionPlaceholder"></textarea>
+ <button class="primary" id="inlineTranslateButton" onclick="translateInside()">Translate here →</button>
+ </div>
+ <div class="translation" id="translationOutput" aria-live="polite" style="display:none;margin-top:14px">
+ <div class="eyebrow" id="resultLabel">TRANSLATION RESULT</div>
+ <p id="translatedContent" style="font-size:19px;overflow-wrap:anywhere"></p>
+ <button class="secondary" id="copyTranslationButton" onclick="copyTranslation()">📋 Copy translation</button>
+ <button class="secondary" id="showTranslationStaffButton" onclick="translatedToStaff()">👩‍🍳 Show to staff</button>
+ </div>
+ <p class="note" id="inlinePrivacy">Demo translation uses a third-party service over the internet. Do not enter personal or sensitive information. Confirm allergy and safety details with staff.</p>
+</section>
+<section class="page" id="staff">
+ <button class="back" onclick="go('home')">← <span data-t="back"></span></button>
+ <h2 data-t="staffTitle"></h2><p class="muted" data-t="staffIntro"></p>
+ <div class="card"><strong id="quickTitle">Quick requests</strong><div id="quickRequests" class="chiprow"></div></div>
+ <div id="staffPhotoWrap" class="photobox" hidden><img id="staffPhoto" alt="Photo from customer" style="max-width:100%;max-height:300px;display:block;margin:auto;border-radius:10px"></div>
+ <div class="translation"><div class="eyebrow">CUSTOMER QUESTION</div><p id="staffOriginal">—</p><hr style="border:0;border-top:1px solid var(--line)"><div class="eyebrow">給店員看的內容</div><p id="staffChinese"></p></div>
+ <button class="secondary" onclick="openGoogleFromStaff()" data-t="googleButton"></button>
+ <button class="secondary" onclick="copyStaffText()" id="copyStaffButton">📋 Copy for staff</button>
+ <p class="note" data-t="staffNote"></p>
+</section>
+<section class="page" id="photo">
+ <button class="back" onclick="go('home')">← <span data-t="back"></span></button>
+ <h2 data-t="photoTitle"></h2><p class="muted" data-t="photoIntro"></p>
+ <div class="photobox">📷<p data-t="upload"></p><input type="file" id="photoInput" accept="image/*" capture="environment" onchange="previewPhoto(event)"><img id="preview" hidden alt="Uploaded photo"></div>
+ <div class="card note" data-t="photoNote"></div>
+ <div class="card"><strong id="photoQuestionTitle">What would you like to ask?</strong><textarea id="photoQuestion" rows="3" placeholder="e.g. How do I use this tool?"></textarea><button class="primary" onclick="photoToStaff()" id="photoStaffButton">📸 Show photo to staff →</button><p class="note" id="photoHelpNote">Your photo stays on this device in this demo. No AI recognition yet.</p></div>
+ <div class="card" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap" id="recognitionTabs">
+ <button class="smallbtn" id="tabTools" onclick="switchRecognitionTab('tools')">🥣 Baking Tools</button>
+ <button class="smallbtn" id="tabIngredients" onclick="switchRecognitionTab('ingredients')">🌾 Basic Ingredients</button>
+ </div>
+ <div id="toolsPanel">
+ <h2 id="presetHeading">Popular baking tools</h2><p class="muted" id="presetIntro">Tap an illustrated tool to see its name and use.</p><div id="presetCards" class="preset-grid"></div>
+ <h2 id="toolHeading" style="display:none">Baking Tools Gallery</h2>
+ <p class="muted" id="toolIntro" style="display:none">Choose a baking tool below to view a sample result in your language.</p>
+ <img class="reference-photo" src="https://trufflenationonline.com/blog/pastry-techniques/tools.jpg" alt="An assortment of baking tools, including whisk, scrapers, spatulas and piping bag" loading="lazy" onerror="this.alt='Reference image unavailable while offline';this.style.height='75px'">
+ <p class="source"><a href="https://trufflenationonline.com/blog/pastry-techniques/" target="_blank" rel="noopener">Image source: Truffle Nation – Pastry Techniques ↗</a></p>
+ <img class="reference-photo" src="https://api.sveisvasta.hr/Images/Data/Alati-i-pribor-f54012c3-1b56-47d7-8309-3ef76714c981.jpg" alt="Pastel pastry tools: piping bag, whisk, rolling pin, silicone spatula" loading="lazy" onerror="this.alt='Reference image unavailable while offline';this.style.height='75px'">
+ <p class="source"><a href="https://sveisvasta.hr/Category/1/Slasti%C4%8Darstvo" target="_blank" rel="noopener">Image source: Sve i Svašta – Baking Supplies ↗</a></p>
+ <div id="toolOptions" class="tool-gallery" hidden></div>
+ <div class="card" id="toolResult" aria-live="polite"></div>
+ </div>
+ <div id="ingredientsPanel" hidden>
+ <h2 id="ingredientsTitle">🌾 Basic Baking Ingredients</h2>
+ <p class="muted" id="ingredientsNote">Choose an ingredient to see its name in your language and its Chinese name for staff. These are examples, not camera recognition.</p>
+ <div id="ingredientsGrid" class="tool-gallery"></div>
+ <div class="card" id="ingredientDetail" aria-live="polite"></div>
+ </div>
+</section>
+<section class="page" id="finish">
+ <button class="back" onclick="go('home')">← <span data-t="back"></span></button>
+ <div class="hero"><span class="cake">🎉</span><h1 id="memoryMainTitle" class="page-title-fancy">Memory Polaroid</h1><p class="muted" id="memoryMainIntro">Choose a frame, stickers and a caption for your printed souvenir card.</p></div>
+ <div class="card"><strong id="memoryUploadTitle">1. Add a photo</strong><div class="upload-inline"><input type="file" id="memoryPhotoInput" accept="image/*" capture="environment" onchange="previewMemoryPhoto(event)"><button class="smallbtn" onclick="usePhotoHelpImage()" id="usePreviousPhotoBtn">Use photo from Photo Help</button></div><p class="note" id="memoryUploadNote">In this demo, the photo stays on your device and is used only for preview.</p></div>
+ <div class="card"><strong id="memoryFrameTitle">2. Choose a frame</strong><div class="memory-grid" id="frameOptions"></div></div>
+ <div class="card"><strong id="memoryStickerTitle">3. Choose stickers</strong><p class="note" id="memoryStickerNote">You can pick up to 4 stickers.</p><div class="sticker-grid" id="stickerOptions"></div></div>
+ <div class="card"><strong id="memoryCaptionTitle">4. Choose a caption</strong><div class="caption-list" id="captionOptions"></div></div>
+ <div class="card"><strong id="memoryFontTitle">5. Choose a font</strong><p class="note" id="memoryFontNote">Tap a font style for the main caption.</p><div class="font-grid" id="fontOptions"></div></div>
+ <div class="card"><strong id="memoryPreviewTitle">6. Preview</strong><div class="polaroid-wrap"><div class="polaroid-card frame-classic" id="polaroidCard"><div class="stick s1" id="stick1"></div><div class="stick s2" id="stick2"></div><div class="stick s3" id="stick3"></div><div class="stick s4" id="stick4"></div><div class="polaroid-photo"><img id="memoryPreviewImg" hidden alt="Memory preview image"><div class="polaroid-placeholder" id="memoryPlaceholder">Your photo will appear here</div></div><div class="polaroid-caption script-font" id="memoryCaptionText">I made it!</div><div class="polaroid-sub">BakeMate AI · DIY Sweet Memory</div></div></div><p class="note" id="memoryPreviewNote">Preview your card, then confirm to download a PNG.</p></div>
+ <button class="primary" onclick="go('printConfirm')" id="memoryDoneBtn">Confirm card →</button>
+</section>
+<section class="page" id="printConfirm">
+<button class="back" onclick="go('finish')">← <span data-t="back"></span></button>
+<div class="hero"><span class="cake">🎁</span><h1 id="confirmTitle"></h1><p id="confirmIntro" class="muted"></p></div>
+<div class="card"><strong id="confirmReviewTitle"></strong><p id="confirmReview"></p></div>
+<button class="primary" id="downloadMemoryBtn" onclick="exportMemoryPNG()"></button>
+<button class="secondary" id="editMemoryBtn" onclick="go('finish')"></button>
+<div class="card note" role="status" id="printStatus"></div>
+<p class="note" id="printPrivacy"></p></section>
+<footer>BakeMate AI · Mobile Demo v17.3</footer>
+</main>
+<script>
+const langs=[["en","🇺🇸","English","English"],["zh","🇹🇼","繁體中文","Traditional Chinese"],["ja","🇯🇵","日本語","Japanese"],["ko","🇰🇷","한국어","Korean"],["th","🇹🇭","ภาษาไทย","Thai"],["vi","🇻🇳","Tiếng Việt","Vietnamese"]];
+let lang='en',category='general',currentStaffText='';
+let memoryFrame='classic', selectedStickers=['🎂','✨'], selectedCaption=0, customCaption='', selectedFont='auto';
+let stickerPositions=[{x:0.12,y:0.70},{x:0.88,y:0.70},{x:0.16,y:0.90},{x:0.84,y:0.90}], activeStickerDrag=null;
+const tr={
+ en:{welcome:"Welcome to BakeMate!",tagline:"Your friendly companion for a sweeter baking experience.",aiTitle:"BakeMate AI (demo)",aiSub:"Quick answers, language support & help",faqTitle:"Frequently Asked Questions",translateTitle:"Translation",photoTitle:"Photo Help",staffTitle:"Staff Assistance",done:"I'm Done!",back:"Back",helpIntro:"Choose a topic, or tell our staff what you need.",askTitle:"Have another question?",questionPlaceholder:"Type your question here...",showStaff:"Show my question to staff →",knowledgeNote:"This demo uses example FAQs. Free-text AI answers are not connected yet.",translationIntro:"Translate a short message here, then show or copy the result.",googleButton:"Open Google Translate ↗",googleNote:"Translation opens on Google's website. In-page AI translation will be added later.",staffIntro:"Show this screen to a staff member.",staffNote:"Free-text questions are shown as originally written until translated; do not treat them as verified Chinese translations.",photoIntro:"Take or upload a photo to show our staff.",upload:"Choose a photo or open your camera",photoNote:"Photo preview is available. AI image recognition will be added later.",congrats:"You did it!",memoryLater:"Your printed memory Polaroid is coming in the next phase.",memoryTitle:"Your Sweet Memory Card",memoryNote:"Photo frames and staff-assisted printing will be designed next.",backHome:"Back to Home",catGeneral:"General",catIngredients:"Ingredients",catBaking:"Baking Help"},
+ zh:{welcome:"歡迎使用 BakeMate！",tagline:"讓語言不再成為甜蜜烘焙體驗的障礙。",aiTitle:"BakeMate AI（示範）",aiSub:"常見問題、跨語言溝通與現場協助",faqTitle:"常見問題",translateTitle:"即時翻譯",photoTitle:"拍照協助",staffTitle:"請店員協助",done:"我完成了！",back:"返回",helpIntro:"選擇常見問題，或輸入想請店員協助的內容。",askTitle:"有其他問題嗎？",questionPlaceholder:"請輸入你的問題……",showStaff:"出示問題給店員 →",knowledgeNote:"本版為示範 FAQ，自由提問尚未串接 AI。",translationIntro:"在此翻譯簡短訊息，再出示或複製翻譯結果。",googleButton:"開啟 Google 翻譯 ↗",googleNote:"此功能會前往 Google 網頁，之後可加入頁內 AI 翻譯。",staffIntro:"請出示此畫面給工作人員。",staffNote:"自由輸入文字尚未自動翻譯，不能視為已確認的中文譯文。",photoIntro:"拍攝照片或從相簿上傳，方便向店員說明。",upload:"選擇照片或開啟相機",photoNote:"目前支援照片預覽，AI 圖片辨識之後再串接。",congrats:"恭喜完成！",memoryLater:"實體拍立得紀念卡將在下一階段製作。",memoryTitle:"專屬完成紀念卡",memoryNote:"相框、濾鏡及店員列印流程之後設計。",backHome:"返回首頁",catGeneral:"基本資訊",catIngredients:"食材相關",catBaking:"製作協助"},
+ ja:{welcome:"BakeMateへようこそ！",tagline:"言葉の壁を越えて、お菓子作りを楽しみましょう。",aiTitle:"BakeMate AI（デモ）",aiSub:"よくある質問・翻訳・スタッフへの相談",faqTitle:"よくある質問",translateTitle:"翻訳",photoTitle:"写真で相談",staffTitle:"スタッフに相談",done:"完成しました！",back:"戻る",helpIntro:"項目を選ぶか、質問を入力してください。",askTitle:"ほかに質問はありますか？",questionPlaceholder:"質問を入力...",showStaff:"スタッフに見せる →",knowledgeNote:"デモ用FAQです。自由入力へのAI回答は未接続です。",translationIntro:"短いメッセージをここで翻訳し、結果を見せたりコピーしたりできます。",googleButton:"Google翻訳を開く ↗",googleNote:"翻訳結果はGoogleのページで表示されます。",staffIntro:"この画面をスタッフに見せてください。",staffNote:"自由入力はまだ中国語に自動翻訳されていません。",photoIntro:"写真を撮影・アップロードしてスタッフに見せられます。",upload:"写真を撮る・選ぶ",photoNote:"画像プレビューのみ対応。AI画像認識は今後追加予定です。",congrats:"完成おめでとう！",memoryLater:"記念フォトカード機能は次の段階で制作します。",memoryTitle:"記念フォトカード",memoryNote:"フレームと印刷機能は今後追加予定です。",backHome:"ホームへ",catGeneral:"基本情報",catIngredients:"材料",catBaking:"製作サポート"},
+ ko:{welcome:"BakeMate에 오신 것을 환영합니다!",tagline:"언어 걱정 없이 베이킹을 즐겨보세요.",aiTitle:"BakeMate AI (데모)",aiSub:"자주 묻는 질문·번역·직원 도움",faqTitle:"자주 묻는 질문",translateTitle:"번역",photoTitle:"사진 도움",staffTitle:"직원에게 문의",done:"완성했어요!",back:"뒤로",helpIntro:"항목을 선택하거나 질문을 입력하세요.",askTitle:"다른 질문이 있나요?",questionPlaceholder:"질문을 입력하세요...",showStaff:"직원에게 보여주기 →",knowledgeNote:"예시 FAQ입니다. 자유 질문 AI는 아직 연결되지 않았습니다.",translationIntro:"짧은 메시지를 여기에서 번역하고 결과를 보여주거나 복사하세요.",googleButton:"Google 번역 열기 ↗",googleNote:"번역 결과는 Google 웹사이트에 표시됩니다.",staffIntro:"이 화면을 직원에게 보여주세요.",staffNote:"직접 입력한 내용은 아직 중국어로 자동 번역되지 않습니다.",photoIntro:"사진을 찍거나 업로드해 직원에게 보여주세요.",upload:"사진 촬영 또는 선택",photoNote:"사진 미리보기만 지원합니다. AI 이미지 인식은 추후 추가됩니다.",congrats:"완성을 축하해요!",memoryLater:"인쇄 기념 카드는 다음 단계에서 만들 예정입니다.",memoryTitle:"나만의 기념 카드",memoryNote:"프레임과 인쇄 기능은 추후 추가됩니다.",backHome:"홈으로",catGeneral:"기본 정보",catIngredients:"재료",catBaking:"베이킹 도움"},
+ th:{welcome:"ยินดีต้อนรับสู่ BakeMate!",tagline:"เพลิดเพลินกับการทำขนมโดยไม่ต้องกังวลเรื่องภาษา",aiTitle:"BakeMate AI (เดโม)",aiSub:"คำถามที่พบบ่อย การแปล และความช่วยเหลือ",faqTitle:"คำถามที่พบบ่อย",translateTitle:"แปลภาษา",photoTitle:"ความช่วยเหลือด้วยภาพ",staffTitle:"ขอความช่วยเหลือจากพนักงาน",done:"เสร็จแล้ว!",back:"กลับ",helpIntro:"เลือกหัวข้อหรือพิมพ์คำถามของคุณ",askTitle:"มีคำถามอื่นไหม?",questionPlaceholder:"พิมพ์คำถามที่นี่...",showStaff:"แสดงให้พนักงานดู →",knowledgeNote:"คำตอบตัวอย่างเท่านั้น ยังไม่ได้เชื่อมต่อ AI สำหรับคำถามอิสระ",translationIntro:"แปลข้อความสั้น ๆ ที่นี่ แล้วแสดงหรือคัดลอกผลลัพธ์",googleButton:"เปิด Google แปลภาษา ↗",googleNote:"ผลการแปลจะแสดงในเว็บไซต์ Google",staffIntro:"แสดงหน้าจอนี้ให้พนักงาน",staffNote:"ข้อความที่พิมพ์ยังไม่ได้แปลเป็นภาษาจีนโดยอัตโนมัติ",photoIntro:"ถ่ายหรืออัปโหลดรูปภาพเพื่อแสดงให้พนักงาน",upload:"ถ่ายรูปหรือเลือกรูปภาพ",photoNote:"ขณะนี้ดูตัวอย่างรูปภาพได้ แต่ยังไม่มี AI วิเคราะห์ภาพ",congrats:"ยินดีด้วย!",memoryLater:"การ์ดรูปถ่ายที่ระลึกจะเพิ่มในขั้นต่อไป",memoryTitle:"การ์ดความทรงจำ",memoryNote:"กรอบรูปและการพิมพ์จะเพิ่มในขั้นต่อไป",backHome:"กลับหน้าหลัก",catGeneral:"ข้อมูลทั่วไป",catIngredients:"ส่วนผสม",catBaking:"ความช่วยเหลือ"}
+,vi:{welcome:"Chào mừng đến với BakeMate!",tagline:"Tận hưởng trải nghiệm làm bánh mà không còn rào cản ngôn ngữ.",aiTitle:"BakeMate AI (bản demo)",aiSub:"Câu hỏi thường gặp, dịch thuật và hỗ trợ tại chỗ",faqTitle:"Câu hỏi thường gặp",translateTitle:"Dịch ngôn ngữ",photoTitle:"Hỗ trợ bằng ảnh",staffTitle:"Nhờ nhân viên hỗ trợ",done:"Tôi đã hoàn thành!",back:"Quay lại",helpIntro:"Chọn chủ đề hoặc nhập câu hỏi của bạn.",askTitle:"Bạn có câu hỏi khác không?",questionPlaceholder:"Nhập câu hỏi của bạn...",showStaff:"Cho nhân viên xem câu hỏi →",knowledgeNote:"Đây là các câu trả lời mẫu. Chức năng AI trả lời câu hỏi tự do chưa được kết nối.",translationIntro:"Dịch tin nhắn ngắn tại đây, sau đó hiển thị hoặc sao chép kết quả.",googleButton:"Mở Google Dịch ↗",googleNote:"Kết quả dịch sẽ hiển thị trên trang Google. Tính năng dịch trực tiếp trong trang sẽ được bổ sung sau.",staffIntro:"Hãy cho nhân viên xem màn hình này.",staffNote:"Câu hỏi tự nhập chưa được tự động dịch sang tiếng Trung. Vui lòng dùng nút Google Dịch để dịch.",photoIntro:"Chụp hoặc tải ảnh lên để nhân viên dễ hỗ trợ bạn.",upload:"Chụp ảnh hoặc chọn ảnh",photoNote:"Hiện hỗ trợ xem trước ảnh. Tính năng AI nhận diện hình ảnh sẽ được bổ sung sau.",congrats:"Chúc mừng bạn đã hoàn thành!",memoryLater:"Tính năng in ảnh kỷ niệm sẽ được phát triển ở giai đoạn tiếp theo.",memoryTitle:"Thẻ kỷ niệm ngọt ngào",memoryNote:"Khung ảnh và quy trình in với nhân viên sẽ được bổ sung sau.",backHome:"Về trang chủ",catGeneral:"Thông tin chung",catIngredients:"Nguyên liệu",catBaking:"Hỗ trợ làm bánh"}
+};
+
+const toolItems=[
+ {icon:'🥣',zh:'打蛋器',en:'Whisk',ja:'泡立て器',ko:'거품기',th:'ตะกร้อมือ',vi:'Phới lồng',uses:{zh:'攪拌蛋液、鮮奶油或麵糊。',en:'Whisks eggs, cream, or batter.',ja:'卵やクリーム、生地を混ぜる道具です。',ko:'달걀, 크림, 반죽을 섞는 도구입니다.',th:'ใช้ตีไข่ ครีม หรือส่วนผสมขนม',vi:'Dùng để đánh trứng, kem hoặc bột bánh.'}},
+ {icon:'🍥',zh:'橡皮刮刀',en:'Silicone spatula',ja:'ゴムベラ',ko:'실리콘 주걱',th:'พายซิลิโคน',vi:'Phới dẹt',uses:{zh:'刮取盆內材料，也可輕柔翻拌麵糊。',en:'Scrapes bowls and gently folds batter.',ja:'ボウルの中身を集めたり、生地を混ぜたりします。',ko:'볼의 재료를 긁어 모으거나 반죽을 섞습니다.',th:'ใช้ปาดส่วนผสมจากชามและตะล่อมแป้ง',vi:'Dùng để vét thành âu và trộn nhẹ bột bánh.'}},
+ {icon:'🧁',zh:'擠花袋',en:'Piping bag',ja:'絞り袋',ko:'짤주머니',th:'ถุงบีบครีม',vi:'Túi bắt kem',uses:{zh:'將鮮奶油或餡料擠出、裝飾蛋糕。',en:'Pipes cream or frosting for decoration.',ja:'クリームなどを絞って飾り付けます。',ko:'크림 등을 짜서 케이크를 장식합니다.',th:'ใช้บีบครีมสำหรับตกแต่งเค้ก',vi:'Dùng để bắt kem hoặc trang trí bánh.'}},
+ {icon:'✨',zh:'花嘴',en:'Piping tip',ja:'口金',ko:'모양깍지',th:'หัวบีบครีม',vi:'Đui bắt kem',uses:{zh:'搭配擠花袋，製作不同花紋。',en:'Attaches to a piping bag to make patterns.',ja:'絞り袋に付けて模様を作ります。',ko:'짤주머니에 끼워 다양한 모양을 만듭니다.',th:'ใช้กับถุงบีบเพื่อทำลวดลายต่าง ๆ',vi:'Gắn vào túi bắt kem để tạo các kiểu hoa văn.'}},
+ {icon:'🍰',zh:'抹刀',en:'Offset spatula',ja:'パレットナイフ',ko:'스패튤러',th:'สปาตูล่าแต่งหน้าเค้ก',vi:'Dao chà láng bánh',uses:{zh:'塗抹鮮奶油、抹平蛋糕表面。',en:'Spreads frosting and smooths cake surfaces.',ja:'ケーキのクリームを塗り広げ、表面を整えます。',ko:'케이크의 크림을 펴 바르고 표면을 고르게 합니다.',th:'ใช้ปาดครีมและเกลี่ยหน้าเค้กให้เรียบ',vi:'Dùng để phết kem và làm phẳng bề mặt bánh.'}},
+ {icon:'🔪',zh:'刮板',en:'Bench scraper',ja:'スケッパー',ko:'스크래퍼',th:'ที่ตัดแป้ง',vi:'Dao vét bột',uses:{zh:'分割麵團或整理工作檯上的材料。',en:'Divides dough or scrapes a work surface.',ja:'生地を分割したり、台の上の生地を集めたりします。',ko:'반죽을 나누거나 작업대의 반죽을 모읍니다.',th:'ใช้แบ่งแป้งและกวาดเศษแป้งบนโต๊ะ',vi:'Dùng để chia bột nhào hoặc vét bột trên mặt bàn.'}},
+ {icon:'🥖',zh:'擀麵棍',en:'Rolling pin',ja:'めん棒',ko:'밀대',th:'ไม้คลึงแป้ง',vi:'Cây cán bột',uses:{zh:'將麵團擀成所需厚度。',en:'Rolls dough to an even thickness.',ja:'生地を均等な厚さに伸ばします。',ko:'반죽을 균일한 두께로 밉니다.',th:'ใช้คลึงแป้งให้มีความหนาสม่ำเสมอ',vi:'Dùng để cán bột thành độ dày đều.'}},
+ {icon:'🥄',zh:'麵粉篩',en:'Flour sifter',ja:'粉ふるい',ko:'밀가루 체',th:'กระชอนร่อนแป้ง',vi:'Rây bột',uses:{zh:'過篩麵粉或粉類，減少結塊。',en:'Sifts flour or powdered ingredients to remove lumps.',ja:'小麦粉などの粉類をふるってダマを取り除きます。',ko:'밀가루 등 가루 재료를 체 쳐 덩어리를 줄입니다.',th:'ใช้ร่อนแป้งเพื่อช่วยลดก้อนแป้ง',vi:'Dùng để rây bột và loại bỏ các cục vón.'}},
+ {icon:'🥣',zh:'攪拌盆',en:'Mixing bowl',ja:'ボウル',ko:'믹싱볼',th:'ชามผสม',vi:'Âu trộn bột',uses:{zh:'盛裝材料並攪拌。',en:'Holds ingredients for mixing.',ja:'材料を入れて混ぜる容器です。',ko:'재료를 담고 섞을 때 사용합니다.',th:'ใช้ใส่และผสมส่วนผสม',vi:'Dùng để đựng và trộn nguyên liệu.'}},
+ {icon:'⚖️',zh:'電子秤',en:'Digital scale',ja:'デジタルスケール',ko:'전자저울',th:'เครื่องชั่งดิจิทัล',vi:'Cân điện tử',uses:{zh:'秤量食材重量。',en:'Measures ingredient weight.',ja:'材料の重さを量ります。',ko:'재료의 무게를 측정합니다.',th:'ใช้ชั่งน้ำหนักส่วนผสม',vi:'Dùng để cân nguyên liệu.'}},
+ {icon:'🎂',zh:'蛋糕轉台',en:'Cake turntable',ja:'ケーキ回転台',ko:'케이크 돌림판',th:'แท่นหมุนแต่งเค้ก',vi:'Bàn xoay trang trí bánh',uses:{zh:'旋轉蛋糕，方便抹面與裝飾。',en:'Rotates a cake while frosting and decorating.',ja:'ケーキを回転させながら仕上げます。',ko:'케이크를 돌리며 아이싱과 장식을 합니다.',th:'ใช้หมุนเค้กขณะปาดครีมและตกแต่ง',vi:'Dùng để xoay bánh khi phủ kem và trang trí.'}},
+ {icon:'🍞',zh:'烤模',en:'Baking pan',ja:'焼き型',ko:'베이킹 틀',th:'พิมพ์อบขนม',vi:'Khuôn nướng bánh',uses:{zh:'盛裝麵糊並在烤箱中定型。',en:'Holds batter while baking in the oven.',ja:'生地を入れてオーブンで焼きます。',ko:'반죽을 담아 오븐에서 굽습니다.',th:'ใช้ใส่ส่วนผสมเพื่อนำเข้าอบ',vi:'Dùng để đựng bột bánh khi nướng trong lò.'}}
+];
+let selectedTool=0;
+const toolShortcutUI={
+  en:['Baking Tools','Tap a tool to see its name and use'],
+  zh:['烘焙器具速查','點選器具圖片，立即查看名稱與用途'],
+  ja:['製菓道具ガイド','道具の絵をタップして名前と使い方を確認'],
+  ko:['베이킹 도구 안내','도구 그림을 눌러 이름과 용도를 확인하세요'],
+  th:['คู่มืออุปกรณ์อบขนม','แตะรูปอุปกรณ์เพื่อดูชื่อและวิธีใช้'],
+  vi:['Tra cứu dụng cụ làm bánh','Chạm vào hình dụng cụ để xem tên và công dụng']
+};
+const featuredToolIndices=toolItems.map((_,i)=>i);
+function toolImage(icon,label,bg){
+  const i=toolItems.findIndex(t=>t.en===label);
+  const common='stroke="#94684e" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"';
+  const art=[
+    `<path ${common} d="M200 145V218 M200 145 C150 110 155 24 200 28 C245 24 250 110 200 145 M200 145 C175 116 172 37 200 28 C228 37 225 116 200 145 M200 145 C188 110 190 35 200 28 C210 35 212 110 200 145"/>`,
+    `<path ${common} d="M190 135L165 220 M190 135 Q147 110 158 58 L174 30 Q194 20 230 42 L250 62 Q255 100 211 130Z" fill="#d9a98d"/>`,
+    `<path ${common} d="M155 45 L262 42 L222 171 L208 215 L198 170 Z" fill="#fff9f0"/><path ${common} d="M198 170L208 215L218 171"/>`,
+    `<path ${common} d="M168 56L232 56L220 130L210 166L189 166L180 130Z" fill="#c8b8ac"/><path ${common} d="M176 72L224 72M190 101L210 121"/>`,
+    `<path ${common} d="M116 190L180 125L218 88L278 88L290 100L285 119L227 119L197 145L133 210Z" fill="#c6bcc0"/>`,
+    `<rect x="138" y="42" width="124" height="146" rx="8" stroke="#94684e" stroke-width="8" fill="#ded0c5"/><path ${common} d="M153 80L246 80M148 198L257 198"/>`,
+    `<rect x="129" y="82" width="142" height="80" rx="25" fill="#d8aa81" stroke="#94684e" stroke-width="8"/><path ${common} d="M93 120H128M272 120H309"/>`,
+    `<ellipse cx="200" cy="109" rx="83" ry="44" fill="#d7d1c8" stroke="#94684e" stroke-width="8"/><path ${common} d="M117 109L155 165H245L283 109M155 165L144 198M245 165L256 198"/><path ${common} d="M152 112H248M171 86V149M200 79V158M229 87V149"/>`,
+    `<path ${common} d="M108 87Q118 197 200 199Q282 197 292 87Z" fill="#c7ced0"/><ellipse cx="200" cy="87" rx="92" ry="26" fill="#eee6db" stroke="#94684e" stroke-width="8"/>`,
+    `<rect x="126" y="76" width="148" height="116" rx="15" fill="#d3d8d5" stroke="#94684e" stroke-width="8"/><rect x="162" y="109" width="76" height="36" rx="6" fill="#f8f6ea" stroke="#94684e" stroke-width="5"/><text x="181" y="133" font-size="21" fill="#94684e">0 g</text>`,
+    `<ellipse cx="200" cy="164" rx="94" ry="23" stroke="#94684e" stroke-width="8" fill="#e5d4c5"/><path ${common} d="M173 184V209M227 184V209M145 216H255"/><ellipse cx="200" cy="134" rx="75" ry="27" stroke="#94684e" stroke-width="7" fill="#f7e4d9"/>`,
+    `<rect x="139" y="51" width="122" height="141" rx="9" fill="#c6b7a9" stroke="#94684e" stroke-width="8"/><rect x="154" y="65" width="92" height="111" rx="5" fill="#eee4d8" stroke="#94684e" stroke-width="5"/>`
+  ][i]||'';
+  const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="400" height="240" viewBox="0 0 400 240"><rect width="400" height="240" rx="24" fill="${bg||'#f1dfcf'}"/><circle cx="320" cy="47" r="50" fill="#fff9ef" opacity=".5"/>${art}</svg>`;
+  return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(svg);
+}
+function renderPresetCards(){
+ const ui={en:['Popular baking tools','Tap an illustrated tool to see its name and use.','How do I use this tool?'],zh:['常見工具圖片選項','點選工具插畫，即可查看名稱、用途和店員求助。','這個工具怎麼使用？'],ja:['人気の製菓道具','イラストをタップすると、その道具の説明を開けます。','この道具はどう使いますか？'],ko:['자주 사용하는 베이킹 도구','사진을 탭하면 해당 도구 설명이 열립니다.','이 도구는 어떻게 사용하나요?'],th:['อุปกรณ์ทำขนมที่พบบ่อย','แตะรูปภาพเพื่อเปิดตัวเลือกเครื่องมือสำเร็จรูป','เครื่องมือนี้ใช้อย่างไร?'],vi:['Dụng cụ làm bánh phổ biến','Chạm vào hình minh họa để xem dụng cụ tương ứng','Tôi sử dụng dụng cụ này như thế nào?']}[lang]||[];
+ document.getElementById('presetHeading').textContent=ui[0];
+ document.getElementById('presetIntro').textContent=ui[1];
+ const holder=document.getElementById('presetCards'); if(!holder) return; holder.replaceChildren();
+ featuredToolIndices.forEach(idx=>{const t=toolItems[idx]; const b=document.createElement('button'); b.className='preset-card'+(idx===selectedTool?' active':''); const img=document.createElement('img'); img.src=toolImage(t.icon,t.en,['#edd7c5','#f1dfcf','#ecd2c9','#efe7d0'][featuredToolIndices.indexOf(idx)]); img.alt=t.en; const title=document.createElement('b'); title.textContent=t[lang]||t.en; const sub=document.createElement('small'); sub.textContent=t.zh; b.append(img,title,sub); b.onclick=()=>{selectedTool=idx; document.getElementById('photoQuestion').value=ui[2]; renderPresetCards(); renderTools(); document.getElementById('toolResult').scrollIntoView({behavior:'smooth',block:'start'});}; holder.appendChild(b);});
+}
+function renderTools(){
+ const ui={en:['Baking Tools Gallery','Select a tool in the reference pictures. This is a sample lookup, not live image recognition.','For staff (Traditional Chinese)','How it is used'],zh:['烘焙工具圖鑑','從照片中選擇工具查看示範結果；目前不是即時 AI 辨識。','給店員看的繁體中文','用途說明'],ja:['製菓道具ガイド','写真にある道具を選んで説明を確認できます。これはサンプルです。','スタッフ向け中国語','用途'],ko:['베이킹 도구 안내','사진 속 도구를 선택해 설명을 보세요. 실제 AI 이미지 인식은 아닙니다.','직원용 중국어','사용 방법'],th:['คู่มืออุปกรณ์ทำขนม','เลือกอุปกรณ์จากภาพเพื่อดูข้อมูลตัวอย่าง ยังไม่ใช่ AI วิเคราะห์ภาพจริง','ภาษาจีนสำหรับพนักงาน','วิธีใช้'],vi:['Hướng dẫn dụng cụ làm bánh','Chọn dụng cụ trong ảnh để xem thông tin mẫu. Đây chưa phải nhận diện ảnh bằng AI.','Tiếng Trung cho nhân viên','Công dụng']}[lang]||[];
+ document.getElementById('toolHeading').textContent=ui[0];document.getElementById('toolIntro').textContent=ui[1];
+ const grid=document.getElementById('toolOptions'); grid.replaceChildren();
+ toolItems.forEach((t,i)=>{const b=document.createElement('button');b.className='tool-pick'+(i===selectedTool?' active':'');const name=document.createElement('b');name.textContent=t.icon+' '+(t[lang]||t.en);const label=document.createElement('small');label.textContent=t.zh;b.append(name,label);b.onclick=()=>{selectedTool=i;renderPresetCards();renderTools()};grid.appendChild(b)});
+ const t=toolItems[selectedTool],res=document.getElementById('toolResult');res.replaceChildren();
+ const title=document.createElement('strong');title.textContent=t.icon+' '+(t[lang]||t.en);
+ const usage=document.createElement('p');usage.textContent=ui[3]+'：'+(t.uses[lang]||t.uses.en);
+ const staff=document.createElement('p');staff.textContent=ui[2]+'：'+t.zh;
+ const btn=document.createElement('button');btn.className='secondary';btn.textContent='👩‍🍳 '+(tr[lang].staffTitle||'Staff Assistance');btn.onclick=()=>{document.getElementById('staffPhotoWrap').hidden=true;currentStaffText=(t[lang]||t.en);document.getElementById('staffOriginal').textContent=currentStaffText;document.getElementById('staffChinese').textContent='我想詢問「'+t.zh+'」的使用方式，請協助我。';go('staff')};
+ res.append(title,usage,staff,btn);
+}
+
+
+const ingredientItems=[{"icon": "🌾", "names": {"zh": "低筋麵粉", "en": "Cake flour", "ja": "薄力粉", "ko": "박력분", "th": "แป้งเค้ก", "vi": "Bột mì làm bánh bông lan"}, "uses": {"zh": "常用於製作蛋糕等細緻口感的烘焙點心。", "en": "A low-protein flour often used for tender cakes."}}, {"icon": "🥚", "names": {"zh": "雞蛋", "en": "Eggs", "ja": "卵", "ko": "달걀", "th": "ไข่ไก่", "vi": "Trứng gà"}, "uses": {"zh": "常用來增加結構、蓬鬆度與乳化效果。", "en": "Used for structure, aeration, and emulsification."}}, {"icon": "🍚", "names": {"zh": "細砂糖", "en": "Caster sugar", "ja": "グラニュー糖", "ko": "고운 설탕", "th": "น้ำตาลทรายละเอียด", "vi": "Đường cát mịn"}, "uses": {"zh": "提供甜味，也影響烘焙成品的色澤與口感。", "en": "Adds sweetness and affects color and texture."}}, {"icon": "🧈", "names": {"zh": "無鹽奶油", "en": "Unsalted butter", "ja": "無塩バター", "ko": "무염 버터", "th": "เนยจืด", "vi": "Bơ lạt"}, "uses": {"zh": "提供奶香與油脂，使用前請確認配方要求的溫度。", "en": "Adds buttery flavor and fat; follow the recipe temperature."}}, {"icon": "🥛", "names": {"zh": "牛奶", "en": "Milk", "ja": "牛乳", "ko": "우유", "th": "นมสด", "vi": "Sữa tươi"}, "uses": {"zh": "提供水分與奶香，部分配方用於調整麵糊濃稠度。", "en": "Adds moisture and dairy flavor to mixtures."}}, {"icon": "🍦", "names": {"zh": "鮮奶油", "en": "Whipping cream", "ja": "生クリーム", "ko": "휘핑크림", "th": "วิปปิ้งครีม", "vi": "Kem tươi whipping cream"}, "uses": {"zh": "可打發用於夾餡或裝飾，需依商品要求冷藏保存。", "en": "Can be whipped for fillings or decoration; refrigerate as instructed."}}, {"icon": "🍫", "names": {"zh": "可可粉", "en": "Cocoa powder", "ja": "ココアパウダー", "ko": "코코아 가루", "th": "ผงโกโก้", "vi": "Bột ca cao"}, "uses": {"zh": "提供巧克力風味與色澤，請與可可飲品粉區分。", "en": "Adds cocoa flavor and color; not the same as sweetened cocoa drink mix."}}, {"icon": "🧂", "names": {"zh": "鹽", "en": "Salt", "ja": "塩", "ko": "소금", "th": "เกลือ", "vi": "Muối"}, "uses": {"zh": "少量使用可平衡甜味並調整風味。", "en": "Balances sweetness and enhances flavor."}}, {"icon": "☁️", "names": {"zh": "泡打粉", "en": "Baking powder", "ja": "ベーキングパウダー", "ko": "베이킹파우더", "th": "ผงฟู", "vi": "Bột nở"}, "uses": {"zh": "化學膨鬆劑，能幫助部分麵糊在烘烤時膨脹。", "en": "A chemical leavening agent that helps batters rise."}}, {"icon": "🌼", "names": {"zh": "香草精", "en": "Vanilla extract", "ja": "バニラエッセンス", "ko": "바닐라 익스트랙", "th": "กลิ่นวานิลลา", "vi": "Chiết xuất vani"}, "uses": {"zh": "提供香草香氣；是否含酒精需以實際產品標示為準。", "en": "Adds vanilla aroma; check the specific label for alcohol content."}}, {"icon": "🥜", "names": {"zh": "杏仁粉", "en": "Almond flour", "ja": "アーモンドプードル", "ko": "아몬드 가루", "th": "ผงอัลมอนด์", "vi": "Bột hạnh nhân"}, "uses": {"zh": "以杏仁製成，常見於法式烘焙；屬堅果類過敏原，請先向店員確認。", "en": "Ground almonds for baking; a tree-nut allergen. Ask staff before use."}}, {"icon": "🧀", "names": {"zh": "奶油乳酪", "en": "Cream cheese", "ja": "クリームチーズ", "ko": "크림치즈", "th": "ครีมชีส", "vi": "Phô mai kem"}, "uses": {"zh": "常用於乳酪蛋糕與霜飾，需依產品標示冷藏保存。", "en": "Used in cheesecakes and frostings; refrigerate as instructed."}}];
+let selectedIngredient=0, recognitionTab='tools';
+const ingredientUI={
+ en:['🥣 Baking Tools','🌾 Basic Ingredients','Basic Baking Ingredients','Select an ingredient to see its name and a short explanation. Sample glossary only—not camera recognition.','Usage','For staff (Traditional Chinese)','Ask staff about this ingredient'],
+ zh:['🥣 烘焙器具','🌾 基礎原料','基礎烘焙原料','點選原料查看名稱與用途。本頁為圖鑑示範，並非即時拍照辨識。','用途說明','給店員看的繁體中文','詢問店員這項原料'],
+ ja:['🥣 製菓道具','🌾 基本材料','基本の製菓材料','材料を選ぶと名称と説明を確認できます。カメラによる自動認識ではありません。','用途','スタッフ向け繁体字中国語','この材料についてスタッフに質問'],
+ ko:['🥣 베이킹 도구','🌾 기본 재료','베이킹 기본 재료','재료를 선택하면 이름과 설명을 확인할 수 있습니다. 실시간 사진 인식 기능은 아닙니다.','용도','직원에게 보여줄 번체 중국어','이 재료에 대해 직원에게 문의'],
+ th:['🥣 อุปกรณ์อบขนม','🌾 วัตถุดิบพื้นฐาน','วัตถุดิบพื้นฐานสำหรับอบขนม','เลือกวัตถุดิบเพื่อดูชื่อและคำอธิบาย เป็นตัวอย่าง ไม่ใช่การรู้จำภาพจากกล้อง','การใช้งาน','ภาษาจีนตัวเต็มสำหรับพนักงาน','สอบถามพนักงานเกี่ยวกับวัตถุดิบนี้'],
+ vi:['🥣 Dụng cụ làm bánh','🌾 Nguyên liệu cơ bản','Nguyên liệu làm bánh cơ bản','Chọn một nguyên liệu để xem tên và mô tả. Đây là danh mục minh họa, chưa phải nhận diện ảnh tự động.','Công dụng','Tiếng Trung phồn thể cho nhân viên','Hỏi nhân viên về nguyên liệu này']
+};
+function switchRecognitionTab(tab){recognitionTab=tab;renderIngredientSection();}
+function renderIngredientSection(){
+ const u=ingredientUI[lang]||ingredientUI.en;
+ const tools=document.getElementById('toolsPanel'),ingredients=document.getElementById('ingredientsPanel');
+ if(!tools||!ingredients)return;
+ tools.hidden=recognitionTab!=='tools';ingredients.hidden=recognitionTab!=='ingredients';
+ const t=document.getElementById('tabTools'),i=document.getElementById('tabIngredients');
+ t.textContent=u[0];i.textContent=u[1];t.classList.toggle('active',recognitionTab==='tools');i.classList.toggle('active',recognitionTab==='ingredients');
+ t.setAttribute('aria-pressed',String(recognitionTab==='tools'));i.setAttribute('aria-pressed',String(recognitionTab==='ingredients'));
+ document.getElementById('ingredientsTitle').textContent=u[2];document.getElementById('ingredientsNote').textContent=u[3];
+ const grid=document.getElementById('ingredientsGrid');grid.replaceChildren();
+ ingredientItems.forEach((item,idx)=>{const b=document.createElement('button');b.className='tool-pick'+(selectedIngredient===idx?' active':'');
+ const n=document.createElement('b');n.textContent=item.icon+' '+(item.names[lang]||item.names.en);
+ const sub=document.createElement('small');sub.textContent=item.names.zh;b.append(n,sub);b.onclick=()=>{selectedIngredient=idx;renderIngredientSection()};grid.appendChild(b)});
+ const item=ingredientItems[selectedIngredient],detail=document.getElementById('ingredientDetail');detail.replaceChildren();
+ const name=document.createElement('strong');name.textContent=item.icon+' '+(item.names[lang]||item.names.en);
+ const usage=document.createElement('p');usage.textContent=u[4]+'：'+(item.uses[lang]||item.uses.en);
+ const staff=document.createElement('p');staff.textContent=u[5]+'：'+item.names.zh;
+ const ask=document.createElement('button');ask.className='secondary';ask.textContent='👩‍🍳 '+u[6];
+ ask.onclick=()=>{document.getElementById('staffPhotoWrap').hidden=true;currentStaffText=(item.names[lang]||item.names.en);document.getElementById('staffOriginal').textContent=currentStaffText;document.getElementById('staffChinese').textContent='我想詢問「'+item.names.zh+'」的相關資訊，請協助我確認。';go('staff')};
+ detail.append(name,usage,staff,ask);
+}
+
+const memoryFrames=[
+ {id:'classic',label:{en:'Classic Polaroid',zh:'經典拍立得',ja:'クラシック',ko:'클래식',th:'คลาสสิก',vi:'Cổ điển'},desc:{en:'Clean white frame',zh:'乾淨白框',ja:'白い定番フレーム',ko:'깔끔한 흰색 프레임',th:'กรอบสีขาวเรียบง่าย',vi:'Khung trắng tối giản'}},
+ {id:'cream',label:{en:'Cream Bakery',zh:'奶油烘焙風',ja:'クリームベーカリー',ko:'크림 베이커리',th:'ครีมเบเกอรี่',vi:'Tông kem bakery'},desc:{en:'Soft creamy tone',zh:'柔和奶油色',ja:'やさしいクリーム色',ko:'부드러운 크림 톤',th:'โทนครีมนุ่มนวล',vi:'Tông kem nhẹ nhàng'}},
+ {id:'caramel',label:{en:'Caramel Warmth',zh:'焦糖暖色',ja:'キャラメル',ko:'카라멜 웜톤',th:'คาราเมลอบอุ่น',vi:'Tông caramel ấm'},desc:{en:'Warm gift-like style',zh:'像禮物般溫暖',ja:'ギフトのような温かさ',ko:'선물 같은 따뜻함',th:'อบอุ่นเหมือนของขวัญ',vi:'Ấm áp như một món quà'}},
+ {id:'cute',label:{en:'Cute Pastel',zh:'可愛粉彩',ja:'キュートパステル',ko:'큐트 파스텔',th:'พาสเทลน่ารัก',vi:'Pastel dễ thương'},desc:{en:'Playful pink details',zh:'帶粉色細節',ja:'ピンクのアクセント',ko:'핑크 포인트',th:'มีดีเทลสีชมพู',vi:'Điểm nhấn màu hồng'}},
+ {id:'blush_upload',img:"data:image/png;base64,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",label:{en:'Blush Frame',zh:'奶杏粉框',ja:'ブラッシュフレーム',ko:'블러시 프레임',th:'กรอบชมพูนู้ด',vi:'Khung hồng nude'},desc:{en:'Uploaded frame 1',zh:'你上傳的相框 1',ja:'アップロードしたフレーム 1',ko:'업로드한 프레임 1',th:'กรอบที่อัปโหลด 1',vi:'Khung bạn tải lên 1'}},
+ {id:'honey_upload',img:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAHCCAYAAABVM/SHAAAJTElEQVR4nO3cTW5cWR3G4f+pKscfIZ1A2ukWqINEWjBpMWcDZA1shT2wD5YADJmwAgaI7paIRKQ07nx0Jy6bqrqHQUUI2nZwFb5J3uR5Bh64rs+9HtRP55770XrvvQACTN70AQBclmABMQQLiDF71YeroddiuaphsMwFjGsyabUzm9Z00i7c5sJgHZ+c1vybr2v59Ivqp8+qqlfVxQMBbGfdlrZ7s2a37tX+B7frYG/33C3PDdbxyWk9f/R5rR78rvr86OWAAGNqNewf1uru/aqPPj03Wu27tzWshl5Pjh7W4i+/Xcdq8sqzRoCrMyyr7X9YOz/7VX3/w49rOvnvZfYzi+6L5apWT78UK+D1m8yqz49q9fSLWiyHsx9/9xfD0P9jzQrgdVs36LyLfVtOoXqVG+SBbbVW21zE2zxYvVfbOaianb+KD/A/LU+rL45fhuvyNrtxtPeaXL9Tk/3DcosDsJ1Wk4PDmly/s/GZ2gYzrPXMqk33avXN38oaF7Ct1fxxTT+4W23noPryuC47Abp8sHqvmu3WsHheVb2qeaoH2FIf1i2Z7VYtXlz61HCL6phZAVdh85aYJgExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExXtMb+rob5OFd1v79Y1QjB+vle7Ome549hHdZH6pWJ1u/5+qyRgxWr2qz6h//oiY3P602mY63K+CN6sOq+rPPqx79qaova6xojResYah++PP60Wf3vTgL3gef3Kv67H49/MOve400QRnvPK21qus/HG144C214VtENzHuwpJ1K+AKKQoQQ7CAGIIFxBAsIIZgATEEC4ghWEAMwQJiCBYQQ7CAGIIFxBAsIIZgATEEC4ghWEAMwQJiCBYQQ7CAGIIFxBAsIIZgATEEC4ghWEAMwQJiCBYQQ7CAGIIFxBAsIIZgATEEC4ghWEAMwQJiCBYQQ7CAGIIFxBAsIIZgATEEC4ghWEAMwQJiCBYQQ7CAGIIFxBAsIIZgATEEC4ghWEAMwQJiCBYQQ7CAGIIFxBAsIIZgATEEC4ghWEAMwQJiCBYQQ7CAGIIFxBAsIIZgATEEC4ghWEAMwQJiCBYQQ7CAGIIFxBAsIIZgATEEC4ghWEAMwQJiCBYQQ7CAGIIFxBAsIIZgATEEC4ghWEAMwQJiCBYQQ7CAGIIFxBAsIIZgATEEC4ghWEAMwQJiCBYQQ7CAGIIFxBAsIIZgATEEC4ghWEAMwQJiCBYQQ7CAGIIFxBAsIIZgATEEC4ghWEAMwQJiCBYQQ7CAGIIFxBAsIIZgATEEC4ghWEAMwQJiCBYQQ7CAGIIFxBAsIIZgATEEC4ghWEAMwQJiCBYQQ7CAGIIFxBAsIIZgATEEC4ghWEAMwQJiCBYQQ7CAGIIFxBAsIIZgATEEC4ghWEAMwQJiCBYQQ7CAGIIFxBAsIIZgATEEC4ghWEAMwQJiCBYQQ7CAGIIFxBAsIIZgATEEC4ghWEAMwQJiCBYQQ7CAGIIFxBAsIIZgATEEC4ghWEAMwQJiCBYQQ7CAGIIFxBAsIIZgATEEC4ghWEAMwQJiCBYQQ7CAGIIFxBAsIIZgATEEC4ghWEAMwQJiCBYQQ7CAGIIFxBAsIIZgATEEC4ghWEAMwQJiCBYQQ7CAGIIFxBAsIIZgATEEC4ghWEAMwQJiCBYQQ7CAGIIFxBAsIIZgATEEC4ghWEAMwQJiCBYQQ7CAGIIFxBAsIIZgATEEC4ghWEAMwQJiCBYQQ7CAGIIFxBAsIIZgATEEC4ghWEAMwQJiCBYQQ7CAGIIFxBAsIIZgATEEC4ghWEAMwQJiCBYQQ7CAGIIFxBAsIIZgATEEC4ghWEAMwQJiCBYQQ7CAGIIFxBAsIIZgATEEC4ghWEAMwQJiCBYQQ7CAGIIFxBAsIIZgATEEC4ghWEAMwQJiCBYQQ7CAGIIFxBAsIIZgATEEC4ghWEAMwQJiCBYQQ7CAGIIFxBAsIIZgATEEC4ghWEAMwQJiCBYQQ7CAGIIFxBAsIIZgATEEC4ghWEAMwQJijBisXrWcjzc88Jbqo408YrBatSd/Hm944C3VRht5NtrIbVL14u/18I+/6f17n1RNdmvM8gJvSqsaTqs9f1B1+mT93R/JeMGqWh/46eNqJ0clVvAua+vv+4ixqho7WFWv5Z8A3g9KAsQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEGOLYLWrPwrgPbR5S2aXH7tVLU9qcnCnVvPHVX3YeGcAa60m127UcPzVui2XdPlgVau+mFdfzmt688fV//lt9epbHCjwPmvVql27UX05r76YjxWsqmqthhdfVds5qJrtbnqcANWrVz/+R/XF8Uaxqto0WFVVrVVfHlctXmz8pwBVtQ7VhrGq2iZY671ttTOA/8eZq4STSau2e7NcDQTejHWDppOzDToTrJ3ZtGa3flK194OqYflaDg+gqqqGZbW92zW7da92ZtMzH7fe+5lLfccnp/X80V9r9eD31edHVa4GAqNr1fYPa3r3l3Xjo5/W/t61s1ucF6yqquP5aR1/e1Srp19WP31W62g5TQSu2rotbfdmTW/dq4Mbt+tg//y7EC4MVlXVajXUYjnUcPEmAFdi0lrtzCY1nV78AM4rgwXwNvHwMxBDsIAYggXE+Bc5XR7a+5tGUwAAAABJRU5ErkJggg==",label:{en:'Honey Frame',zh:'蜂蜜焦糖框',ja:'ハニーフレーム',ko:'허니 프레임',th:'กรอบน้ำผึ้งคาราเมล',vi:'Khung mật ong caramel'},desc:{en:'Uploaded frame 2',zh:'你上傳的相框 2',ja:'アップロードしたフレーム 2',ko:'업로드한 프레임 2',th:'กรอบที่อัปโหลด 2',vi:'Khung bạn tải lên 2'}},
+ {id:'lavender_upload',img:"data:image/png;base64,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",label:{en:'Lavender Frame',zh:'薰衣草框',ja:'ラベンダーフレーム',ko:'라벤더 프레임',th:'กรอบลาเวนเดอร์',vi:'Khung lavender'},desc:{en:'Uploaded frame 3',zh:'你上傳的相框 3',ja:'アップロードしたフレーム 3',ko:'업로드한 프레임 3',th:'กรอบที่อัปโหลด 3',vi:'Khung bạn tải lên 3'}},
+ {id:'black_generated',img:"data:image/png;base64,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",label:{en:'Black Frame',zh:'黑色相框',ja:'ブラックフレーム',ko:'블랙 프레임',th:'กรอบสีดำ',vi:'Khung màu đen'},desc:{en:'Generated black version',zh:'新增黑色版本',ja:'生成した黒バージョン',ko:'생성한 블랙 버전',th:'เวอร์ชันสีดำที่สร้างเพิ่ม',vi:'Phiên bản màu đen tạoเพิ่ม'}}
+];
+const memoryStickerChoices=['🎂','🧁','🍓','✨','🎀','🤍','🍒','🌼'];
+const memoryCaptions={
+ en:['I made it!','Sweet memory','Baking day','Handmade with love'],
+ zh:['我完成了！','甜蜜回憶','我的烘焙日','親手做的愛'],
+ ja:['できた！','甘い思い出','私のベーキングデー','心を込めて手作り'],
+ ko:['완성했어요!','달콤한 추억','나의 베이킹 데이','정성껏 만든 한 장'],
+ th:['ฉันทำสำเร็จแล้ว!','ความทรงจำแสนหวาน','วันแห่งการอบขนม','ทำด้วยใจ'],
+ vi:['Tôi làm được rồi!','Kỷ niệm ngọt ngào','Ngày làm bánh của tôi','Tự tay làm với yêu thương']
+};
+
+const memoryFontChoices=[
+ {id:'auto',label:{en:'Recommended',zh:'推薦字型',ja:'おすすめ',ko:'추천',th:'แนะนำ',vi:'Đề xuất'},desc:{en:'Auto style by language',zh:'依語言自動套用',ja:'言語に合わせて自動',ko:'언어에 맞춰 자동 적용',th:'เลือกอัตโนมัติตามภาษา',vi:'Tự động theo ngôn ngữ'},cls:'font-clean'},
+ {id:'rounded',label:{en:'Rounded',zh:'粉圓感',ja:'丸文字風',ko:'둥근 글씨',th:'ตัวกลมมน',vi:'Nét tròn mềm'},desc:{en:'Cute and friendly',zh:'可愛圓潤',ja:'やさしく可愛い印象',ko:'부드럽고 귀여운 느낌',th:'น่ารักและเป็นมิตร',vi:'Dễ thương và thân thiện'},cls:'font-rounded'},
+ {id:'script',label:{en:'Signature',zh:'簽名字感',ja:'サイン風',ko:'사인 느낌',th:'ลายเซ็น',vi:'Kiểu chữ ký'},desc:{en:'More like a real signature',zh:'細緻飄逸的簽名字感',ja:'より本物のサイン風',ko:'실제 사인 같은 느낌',th:'ให้ความรู้สึกเหมือนลายเซ็นจริง',vi:'Giống chữ ký thật hơn'},cls:'font-script-ui'},
+ {id:'serif',label:{en:'Elegant Serif',zh:'優雅襯線',ja:'上品な明朝風',ko:'우아한 세리프',th:'เซอริฟหรูหรา',vi:'Serif thanh lịch'},desc:{en:'A more classic look',zh:'較正式經典',ja:'クラシックな印象',ko:'보다 클래식한 느낌',th:'ลุคคลาสสิกมากขึ้น',vi:'Phong cách cổ điển hơn'},cls:'font-serif'}
+];
+function fontClassForSelection(){
+ if(selectedFont==='rounded') return 'font-rounded';
+ if(selectedFont==='script') return lang==='zh' ? 'font-signature-zh' : 'font-script';
+ if(selectedFont==='serif') return 'font-serif';
+ return (lang==='en'||lang==='vi'||lang==='th'||lang==='ko') ? 'font-script' : 'font-rounded';
+}
+function fontStringForCanvas(size,bold=false){
+ const weight=bold?'bold ':'';
+ if(selectedFont==='rounded') return weight+size+'px "Zen Maru Gothic",sans-serif';
+ if(selectedFont==='script'){
+   if(lang==='zh') return size+'px "晨宇落雁體","ChenYuluoyan","HanziPen TC","DFKai-SB","KaiTi TC","BiauKai","Ma Shan Zheng",cursive';
+   if(lang==='ja') return size+'px "Yomogi",sans-serif';
+   return 'italic '+size+'px Caveat,cursive';
+ }
+ if(selectedFont==='serif') return weight+size+'px Georgia,serif';
+ return (lang==='en'||lang==='vi'||lang==='th'||lang==='ko') ? 'italic '+size+'px Caveat,cursive' : weight+size+'px "Zen Maru Gothic",sans-serif';
+}
+function selectFont(id){selectedFont=id;renderMemoryDesigner();}
+function ensureStickerPositions(){
+ const defaults=[{x:0.12,y:0.70},{x:0.88,y:0.70},{x:0.16,y:0.90},{x:0.84,y:0.90}];
+ while(stickerPositions.length<4) stickerPositions.push(defaults[stickerPositions.length]);
+}
+function updateStickerElements(){
+ ensureStickerPositions();
+ const slots=['stick1','stick2','stick3','stick4'];
+ slots.forEach((id,i)=>{
+   const el=document.getElementById(id);
+   el.textContent=selectedStickers[i]||'';
+   el.hidden=!selectedStickers[i];
+   el.dataset.index=i;
+   const pos=stickerPositions[i]||{x:.5,y:.5};
+   el.style.left=(pos.x*100)+'%';
+   el.style.top=(pos.y*100)+'%';
+ });
+}
+function startStickerDrag(ev){
+ const el=ev.currentTarget;
+ if(!el.textContent) return;
+ ev.preventDefault();
+ activeStickerDrag={el,index:Number(el.dataset.index)};
+ el.classList.add('dragging');
+ document.addEventListener('pointermove',onStickerDrag);
+ document.addEventListener('pointerup',stopStickerDrag);
+}
+function onStickerDrag(ev){
+ if(!activeStickerDrag) return;
+ const card=document.getElementById('polaroidCard');
+ const rect=card.getBoundingClientRect();
+ let x=(ev.clientX-rect.left)/rect.width;
+ let y=(ev.clientY-rect.top)/rect.height;
+ x=Math.max(0.06,Math.min(0.94,x));
+ y=Math.max(0.06,Math.min(0.94,y));
+ stickerPositions[activeStickerDrag.index]={x,y};
+ activeStickerDrag.el.style.left=(x*100)+'%';
+ activeStickerDrag.el.style.top=(y*100)+'%';
+}
+function stopStickerDrag(){
+ if(activeStickerDrag) activeStickerDrag.el.classList.remove('dragging');
+ activeStickerDrag=null;
+ document.removeEventListener('pointermove',onStickerDrag);
+ document.removeEventListener('pointerup',stopStickerDrag);
+}
+const memoryUI={
+ en:{main:'Memory Polaroid',intro:'Choose a frame, stickers and a caption for your printed souvenir card.',upload:'1. Add a photo',usePrev:'Use photo from Photo Help',uploadNote:'In this demo, the photo stays on your device and is used only for preview.',frame:'2. Choose a frame',sticker:'3. Choose stickers',stickerNote:'You can pick up to 4 stickers.',caption:'4. Choose a caption',preview:'Preview',previewNote:"Preview your card, then confirm to download a PNG.",done:"Confirm card →",placeholder:'Your photo will appear here',customOption:'Write my own message',customPlaceholder:'Type your own message...',customNote:'Short text looks best on the printed card.',font:'5. Choose a font',fontNote:'Tap a style for the main caption.'},
+ zh:{main:'拍立得紀念卡',intro:'選擇外框、小貼圖與文字，設計你的列印紀念卡。',upload:'1. 加入照片',usePrev:'使用拍照協助的照片',uploadNote:'這是示範版，照片只會留在你的裝置上做預覽。',frame:'2. 選擇外框',sticker:'3. 選擇小貼圖',stickerNote:'最多可選 4 個貼圖。',caption:'4. 選擇一句文字',preview:'預覽',previewNote:"先預覽卡片，確認後即可下載 PNG。",done:"確認卡片 →",placeholder:'你的照片會顯示在這裡',customOption:'自己輸入文字',customPlaceholder:'請輸入自己的文字…',customNote:'文字短一點，印在卡片上會更好看。',font:'5. 選擇字型',fontNote:'點一下切換卡片主標字型。'},
+ ja:{main:'思い出ポラロイド',intro:'フレーム、ステッカー、メッセージを選んで記念カードを作りましょう。',upload:'1. 写真を追加',usePrev:'Photo Help の写真を使う',uploadNote:'このデモでは写真は端末内のみでプレビューに使用されます。',frame:'2. フレームを選ぶ',sticker:'3. ステッカーを選ぶ',stickerNote:'最大4つまで選べます。',caption:'4. メッセージを選ぶ',preview:'プレビュー',previewNote:"カードを確認すると、PNGをダウンロードできます。",done:"カードを確認 →",placeholder:'ここに写真が表示されます',customOption:'自分でメッセージを書く',customPlaceholder:'自分のメッセージを入力…',customNote:'短いメッセージのほうがカードでは見やすいです。',font:'5. フォントを選ぶ',fontNote:'メインメッセージの文字スタイルを選んでください。'},
+ ko:{main:'추억 폴라로이드',intro:'프레임, 스티커, 문구를 골라 기념 카드를 꾸며보세요.',upload:'1. 사진 추가',usePrev:'Photo Help 사진 사용',uploadNote:'이 데모에서는 사진이 기기에만 저장되어 미리보기로 사용됩니다.',frame:'2. 프레임 선택',sticker:'3. 스티커 선택',stickerNote:'스티커는 최대 4개까지 선택할 수 있습니다.',caption:'4. 문구 선택',preview:'미리보기',previewNote:"카드를 미리 본 뒤 확인하면 PNG를 다운로드할 수 있습니다.",done:"카드 확인 →",placeholder:'여기에 사진이 표시됩니다',customOption:'직접 문구 입력',customPlaceholder:'직접 문구를 입력하세요...',customNote:'짧은 문구가 카드에 더 잘 어울립니다.',font:'5. 글꼴 선택',fontNote:'메인 문구의 글꼴 스타일을 선택하세요.'},
+ th:{main:'โพลารอยด์ความทรงจำ',intro:'เลือกกรอบ สติกเกอร์ และข้อความสำหรับการ์ดที่ระลึกของคุณ',upload:'1. เพิ่มรูปภาพ',usePrev:'ใช้รูปจาก Photo Help',uploadNote:'ในเดโมนี้ รูปภาพจะอยู่ในอุปกรณ์ของคุณเพื่อใช้ดูตัวอย่างเท่านั้น',frame:'2. เลือกกรอบ',sticker:'3. เลือกสติกเกอร์',stickerNote:'คุณสามารถเลือกสติกเกอร์ได้สูงสุด 4 ชิ้น',caption:'4. เลือกข้อความ',preview:'ตัวอย่าง',previewNote:"ดูตัวอย่างการ์ดแล้วกดยืนยันเพื่อดาวน์โหลด PNG",done:"ยืนยันการ์ด →",placeholder:'รูปภาพของคุณจะแสดงที่นี่',customOption:'พิมพ์ข้อความเอง',customPlaceholder:'พิมพ์ข้อความของคุณ...',customNote:'ข้อความสั้น ๆ จะเหมาะกับการ์ดมากกว่า',font:'5. เลือกแบบอักษร',fontNote:'แตะเพื่อเลือกสไตล์ตัวอักษรของข้อความหลัก'},
+ vi:{main:'Polaroid kỷ niệm',intro:'Chọn khung, sticker và câu chữ để thiết kế thẻ kỷ niệm in ra.',upload:'1. Thêm ảnh',usePrev:'Dùng ảnh từ Photo Help',uploadNote:'Trong bản demo này, ảnh chỉ nằm trên thiết bị của bạn để xem trước.',frame:'2. Chọn khung',sticker:'3. Chọn sticker',stickerNote:'Bạn có thể chọn tối đa 4 sticker.',caption:'4. Chọn câu chữ',preview:'Xem trước',previewNote:"Xem trước thẻ, rồi xác nhận để tải PNG.",done:"Xác nhận thẻ →",placeholder:'Ảnh của bạn sẽ hiển thị ở đây',customOption:'Tự nhập lời nhắn',customPlaceholder:'Nhập lời nhắn của bạn...',customNote:'Tin nhắn ngắn sẽ đẹp hơn trên thẻ.',font:'5. Chọn phông chữ',fontNote:'Chạm để chọn kiểu chữ cho câu chính.'}
+};
+
+const quickRequests=[
+ {zh:"我需要工作人員協助。",en:"I need assistance from a staff member.",ja:"スタッフの助けが必要です。",ko:"직원의 도움이 필요합니다.",th:"ฉันต้องการความช่วยเหลือจากพนักงาน",vi:"Tôi cần nhân viên hỗ trợ."},
+ {zh:"我對某些食材過敏，請幫我確認。",en:"I have a food allergy. Please help me check the ingredients.",ja:"食物アレルギーがあります。材料を確認してください。",ko:"음식 알레르기가 있습니다. 재료를 확인해 주세요.",th:"ฉันแพ้อาหารบางชนิด กรุณาช่วยตรวจสอบส่วนผสม",vi:"Tôi bị dị ứng thực phẩm. Vui lòng giúp tôi kiểm tra nguyên liệu."},
+ {zh:"我不太清楚下一個製作步驟。",en:"I'm not sure what to do next.",ja:"次に何をすればよいかわかりません。",ko:"다음에 무엇을 해야 할지 모르겠어요.",th:"ฉันไม่แน่ใจว่าต้องทำอะไรต่อไป",vi:"Tôi không chắc bước tiếp theo phải làm gì."},
+ {zh:"我可能做錯了，可以請你幫我看一下嗎？",en:"I may have made a mistake. Could you check?",ja:"作業を間違えたかもしれません。確認してもらえますか？",ko:"실수한 것 같아요. 확인해 주시겠어요?",th:"ฉันอาจทำผิดขั้นตอน ช่วยตรวจสอบให้ได้ไหม",vi:"Có thể tôi đã làm sai. Bạn kiểm tra giúp tôi được không?"},
+ {zh:"這個工具怎麼使用？",en:"How do I use this tool?",ja:"この道具はどう使いますか？",ko:"이 도구는 어떻게 사용하나요?",th:"เครื่องมือนี้ใช้อย่างไร",vi:"Tôi sử dụng dụng cụ này như thế nào?"}
+];
+const faq=[{"id":"FAQ010","cat":"baking","q":{"en":"Do I need to wash the tools after making my dessert?","zh":"做完甜點後需要自己清洗器具嗎？","ja":"お菓子作りの後、使った道具は自分で洗う必要がありますか？","ko":"디저트를 만든 후 사용한 도구를 직접 씻어야 하나요?","th":"ทำขนมเสร็จแล้วต้องล้างอุปกรณ์เองไหม?","vi":"Sau khi làm bánh xong, tôi có phải tự rửa dụng cụ không?"},"a":{"en":"Yes. Customers need to wash the tools they used during the baking activity.","zh":"需要。製作過程中使用的器具，須由顧客自行清洗。","ja":"はい。体験中に使用した道具は、お客様ご自身で洗っていただきます。","ko":"네. 만들기 체험 중 사용한 도구는 고객이 직접 세척해야 합니다.","th":"ต้องล้างค่ะ/ครับ ลูกค้าต้องล้างอุปกรณ์ที่ใช้ระหว่างทำขนมด้วยตนเอง","vi":"Có. Khách hàng cần tự rửa những dụng cụ đã sử dụng trong quá trình làm bánh."}},{"id":"FAQ011","cat":"general","q":{"en":"Can my friend come in just to accompany me?","zh":"朋友不做甜點，可以只陪我進去嗎？","ja":"友達はお菓子を作らず、付き添いだけで入店できますか？","ko":"친구가 디저트를 만들지 않고 동반만 해도 되나요?","th":"เพื่อนเข้ามาเป็นผู้ติดตามโดยไม่ทำขนมได้ไหม?","vi":"Bạn tôi có thể vào cùng mà không làm bánh không?"},"a":{"en":"Yes. Under the general rule, one dessert may have up to one accompanying guest. The accompanying fee is NT$149. Please check the latest store notice for any changes.","zh":"可以。一般規則下，一份甜點最多可有 1 位陪同者，陪同費為 NT$149。費用如有異動，請以最新門市公告為準。","ja":"はい。通常、デザート1品につき付き添いは1名まで可能です。付き添い料金はNT$149です。最新の案内もご確認ください。","ko":"네. 일반 규정상 디저트 1개당 동반인은 최대 1명이며, 동반 요금은 NT$149입니다. 최신 매장 공지를 확인해 주세요.","th":"ได้ ตามกฎทั่วไป ขนม 1 รายการสามารถมีผู้ติดตามได้ไม่เกิน 1 คน ค่าผู้ติดตาม NT$149 โปรดตรวจสอบประกาศล่าสุดของร้าน","vi":"Được. Theo quy định chung, mỗi phần bánh được có tối đa 1 người đi cùng. Phí đi cùng là NT$149. Vui lòng kiểm tra thông báo mới nhất của cửa hàng."}},{"id":"FAQ024","cat":"baking","q":{"en":"How long does it take to make a dessert?","zh":"製作一份甜點大約需要多久？","ja":"お菓子を1品作るのにどのくらいかかりますか？","ko":"디저트 하나를 만드는 데 얼마나 걸리나요?","th":"ใช้เวลาทำขนมหนึ่งอย่างประมาณเท่าไร?","vi":"Làm một món bánh mất khoảng bao lâu?"},"a":{"en":"Most desserts take about 2 hours, but this depends on the item. Some decorated cakes take about 2.5 hours. Please refer to the time shown for your selected dessert.","zh":"多數甜點的製作時間約為 2 小時，但依品項有所不同；部分裝飾蛋糕約需 2.5 小時。請以所選品項的商品說明為準。","ja":"多くのメニューは約2時間ですが、種類によって異なります。デコレーションケーキの一部は約2.5時間かかります。選んだ商品の案内をご確認ください。","ko":"대부분의 디저트는 약 2시간이 걸리지만 품목에 따라 다릅니다. 일부 데코레이션 케이크는 약 2.5시간이 걸립니다. 선택한 메뉴의 안내를 확인해 주세요.","th":"ขนมส่วนใหญ่ใช้เวลาประมาณ 2 ชั่วโมง แต่ขึ้นอยู่กับเมนู เค้กตกแต่งบางรายการใช้เวลาประมาณ 2.5 ชั่วโมง โปรดดูรายละเอียดของเมนูที่เลือก","vi":"Đa số món bánh mất khoảng 2 giờ, tùy từng loại. Một số bánh trang trí mất khoảng 2,5 giờ. Vui lòng xem thời gian ghi trên trang món bánh đã chọn."}},{"id":"FAQ032","cat":"ingredients","q":{"en":"Do I need to refrigerate my cake right away?","zh":"做好的蛋糕需要馬上冷藏嗎？","ja":"完成したケーキはすぐに冷蔵する必要がありますか？","ko":"완성한 케이크는 바로 냉장 보관해야 하나요?","th":"ทำเค้กเสร็จแล้วต้องแช่เย็นทันทีหรือไม่?","vi":"Bánh làm xong có cần cho vào tủ lạnh ngay không?"},"a":{"en":"It depends on the dessert. Most fresh-cream cakes need refrigeration within about 2 hours after completion. Some no-bake cheesecakes and tiramisu items require refrigeration within about 1 hour. Always follow the storage instructions for your specific dessert.","zh":"依品項而定。多數鮮奶油蛋糕約需在完成後 2 小時內冷藏；部分生乳酪與提拉米蘇等甜點約需在 1 小時內冷藏。請以各商品頁的保存說明為準。","ja":"商品によって異なります。生クリームケーキの多くは完成後約2時間以内、一部のレアチーズケーキやティラミスは約1時間以内に冷蔵が必要です。各商品の保存案内をご確認ください。","ko":"품목에 따라 다릅니다. 생크림 케이크 대부분은 완성 후 약 2시간 이내, 일부 노베이크 치즈케이크와 티라미수는 약 1시간 이내에 냉장 보관해야 합니다. 제품별 보관 안내를 확인해 주세요.","th":"ขึ้นอยู่กับชนิดขนม เค้กครีมสดส่วนใหญ่ต้องแช่เย็นภายในประมาณ 2 ชั่วโมงหลังทำเสร็จ ชีสเค้กแบบไม่อบและทีรามิสุบางรายการต้องแช่เย็นภายในประมาณ 1 ชั่วโมง โปรดดูคำแนะนำการเก็บรักษาของแต่ละเมนู","vi":"Tùy loại bánh. Hầu hết bánh kem tươi cần được bảo quản lạnh trong khoảng 2 giờ sau khi hoàn thành; một số loại bánh phô mai không nướng và tiramisu cần bảo quản lạnh trong khoảng 1 giờ. Hãy xem hướng dẫn bảo quản của từng món."}},{"id":"FAQ036","cat":"ingredients","q":{"en":"How can I check for food allergens?","zh":"如果有食物過敏，該怎麼確認？","ja":"食物アレルギーがある場合、どう確認すればよいですか？","ko":"음식 알레르기가 있을 때 어떻게 확인하나요?","th":"หากแพ้อาหารควรตรวจสอบอย่างไร?","vi":"Nếu bị dị ứng thực phẩm, tôi kiểm tra thông tin như thế nào?"},"a":{"en":"Please check the ingredients and allergen information on each dessert’s official product page. Information varies by item, and some products list allergens such as peanuts or tree nuts. If you have a serious allergy, confirm with staff before starting.","zh":"請查看各甜點的官方商品頁面，部分品項有標示花生、堅果等過敏原。不同甜點的成分可能不同；若有嚴重過敏，請於製作前向門市人員再次確認。","ja":"各商品の公式ページで原材料・アレルゲン情報をご確認ください。ピーナッツやナッツ類などが表示される商品もあります。重いアレルギーがある場合は、作業前にスタッフへご確認ください。","ko":"각 디저트의 공식 상품 페이지에서 원재료와 알레르기 유발 성분을 확인해 주세요. 땅콩이나 견과류 등을 표시한 제품도 있습니다. 심한 알레르기가 있다면 시작 전에 직원에게 다시 확인해 주세요.","th":"โปรดตรวจสอบส่วนผสมและข้อมูลสารก่อภูมิแพ้ในหน้าสินค้าอย่างเป็นทางการของขนมแต่ละชนิด บางรายการระบุถั่วลิสงหรือถั่วเปลือกแข็ง หากแพ้อาหารรุนแรง โปรดยืนยันกับพนักงานก่อนเริ่มทำ","vi":"Vui lòng kiểm tra thành phần và thông tin về chất gây dị ứng trên trang sản phẩm chính thức của từng món bánh. Một số món có ghi đậu phộng hoặc các loại hạt. Nếu dị ứng nghiêm trọng, hãy xác nhận với nhân viên trước khi bắt đầu."}}];
+const langOptions=document.querySelector('#languageOptions');
+function drawLanguages(){langOptions.innerHTML='';langs.forEach(([code,flag,name,sub])=>{const b=document.createElement('button');b.className='lang'+(lang===code?' selected':'');b.innerHTML=`<span class="flag">${flag}</span><span><b>${name}</b><small>${sub}</small></span><span class="tick">${lang===code?'✓':''}</span>`;b.onclick=()=>{lang=code;drawLanguages()};langOptions.appendChild(b)})}
+function updateText(){document.documentElement.lang=lang==='zh'?'zh-Hant':lang;document.body.className='lang-'+lang;document.querySelectorAll('[data-t]').forEach(e=>e.textContent=tr[lang][e.dataset.t]||'');document.querySelectorAll('[data-placeholder]').forEach(e=>e.placeholder=tr[lang][e.dataset.placeholder]||'');document.querySelector('#langShort').textContent=lang.toUpperCase();document.getElementById('toolsShortcutTitle').textContent=toolShortcutUI[lang][0];document.getElementById('toolsShortcutSub').textContent=toolShortcutUI[lang][1];drawFAQs();drawQuickRequests();renderPresetCards();renderTools();updatePhotoAssistance();updateAskButton();renderInlineTranslator();renderMemoryDesigner();renderIngredientSection()}
+function go(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.getElementById('changeLang').hidden=id==='language';updateText();if(id==='printConfirm')renderPrintConfirm();window.scrollTo(0,0)}
+function openToolGuide(){go('photo');switchRecognitionTab('tools');requestAnimationFrame(()=>document.getElementById('toolsPanel').scrollIntoView({block:'start'}))}
+function enterHome(){go('home')}
+function openHelp(cat){category=cat;go('help')}
+function drawFAQs(){const cats=document.querySelector('#categories');cats.innerHTML='';[['general','catGeneral'],['ingredients','catIngredients'],['baking','catBaking']].forEach(([id,key])=>{const btn=document.createElement('button');btn.className='chip'+(category===id?' on':'');btn.textContent=tr[lang][key];btn.onclick=()=>{category=id;drawFAQs()};cats.appendChild(btn)});const list=document.querySelector('#faqList');list.innerHTML='';faq.filter(f=>f.cat===category).forEach(f=>{const b=document.createElement('button');b.className='faq';b.textContent=f.q[lang]+'  ⌄';const ans=document.createElement('div');ans.className='answer';ans.textContent=f.a[lang];b.onclick=()=>ans.classList.toggle('show');list.append(b,ans)})}
+function quickStaff(index){document.getElementById("staffPhotoWrap").hidden=true;
+ const item=quickRequests[index];currentStaffText=item[lang]||item.en;
+ document.getElementById('staffOriginal').textContent=currentStaffText;
+ document.getElementById('staffChinese').textContent=item.zh;
+ go('staff');
+}
+function drawQuickRequests(){
+ const holder=document.getElementById('quickRequests');holder.innerHTML='';
+ quickRequests.forEach((item,i)=>{const b=document.createElement('button');b.className='chip';b.textContent=item[lang]||item.en;b.onclick=()=>quickStaff(i);holder.appendChild(b)});
+ const titles={en:'Quick requests',zh:'常用需求快捷鍵',ja:'よくあるお願い',ko:'자주 사용하는 요청',th:'คำขอที่ใช้บ่อย',vi:'Yêu cầu thường gặp'};
+ document.getElementById('quickTitle').textContent=titles[lang];
+ const copies={en:'📋 Copy for staff',zh:'📋 複製給店員',ja:'📋 スタッフにコピー',ko:'📋 직원에게 복사',th:'📋 คัดลอกให้พนักงาน',vi:'📋 Sao chép cho nhân viên'};
+ document.getElementById('copyStaffButton').textContent=copies[lang];
+}
+function copyStaffText(){
+ const a=document.getElementById('staffOriginal').textContent;
+ const b=document.getElementById('staffChinese').textContent;
+ const value=a+'\n\n給店員看：'+b;
+ if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(value).catch(()=>window.prompt('Copy:',value));
+ else window.prompt('Copy:',value);
+}
+function photoToStaff(){
+ const img=document.getElementById('preview');const input=document.getElementById('photoQuestion');
+ const question=input.value.trim()||{en:'Please help me identify or use this baking tool.',zh:'請幫我辨識或使用這個烘焙工具。',ja:'この製菓道具の名前や使い方を教えてください。',ko:'이 베이킹 도구의 이름과 사용법을 알려주세요.',th:'ช่วยบอกชื่อและวิธีใช้อุปกรณ์ทำขนมนี้ด้วย',vi:'Vui lòng giúp tôi nhận biết và sử dụng dụng cụ làm bánh này.'}[lang];
+ if(img.hidden){const notices={en:'Please choose a photo first.',zh:'請先拍攝或選擇照片。',ja:'先に写真を選んでください。',ko:'먼저 사진을 선택하세요.',th:'กรุณาเลือกรูปภาพก่อน',vi:'Vui lòng chọn ảnh trước.'};alert(notices[lang]);return;}
+ currentStaffText=question;
+ document.getElementById('staffOriginal').textContent=question;
+ document.getElementById('staffChinese').textContent=lang==='zh'?question:'顧客提供了照片，請先查看照片並協助確認其疑問。文字部分尚未經過自動翻譯。';
+ const sf=document.getElementById('staffPhoto');sf.src=img.src;document.getElementById('staffPhotoWrap').hidden=false;
+ go('staff');
+}
+function updatePhotoAssistance(){
+ const d={en:['What would you like to ask?','e.g. How do I use this tool?','📸 Show photo to staff →','Photo stays on your device. Not analyzed by AI.'],zh:['想詢問什麼問題？','例如：這個工具怎麼用？','📸 將照片出示給店員 →','照片僅在目前裝置預覽，尚未使用 AI 分析。'],ja:['何について聞きたいですか？','例：この道具の使い方は？','📸 写真をスタッフに見せる →','写真は端末内で表示され、AI分析は行われません。'],ko:['무엇이 궁금하신가요?','예: 이 도구는 어떻게 사용하나요?','📸 직원에게 사진 보여주기 →','사진은 기기에만 표시되며 AI 분석은 하지 않습니다.'],th:['คุณต้องการถามอะไร?','เช่น ใช้เครื่องมือนี้อย่างไร?','📸 แสดงรูปให้พนักงาน →','รูปภาพแสดงเฉพาะบนอุปกรณ์นี้ ยังไม่มีการวิเคราะห์ด้วย AI'],vi:['Bạn muốn hỏi điều gì?','Ví dụ: Dùng dụng cụ này thế nào?','📸 Cho nhân viên xem ảnh →','Ảnh chỉ được xem trên thiết bị; AI chưa phân tích ảnh.']}[lang];
+ document.getElementById('photoQuestionTitle').textContent=d[0];document.getElementById('photoQuestion').placeholder=d[1];document.getElementById('photoStaffButton').textContent=d[2];document.getElementById('photoHelpNote').textContent=d[3];
+}
+const searchLabels={
+ en:{ask:'🔎 Search FAQ',found:'Answer from sample FAQ',no:'No confirmed answer found in the sample knowledge base. Please ask a staff member.',staff:'Show to staff for confirmation'},
+ zh:{ask:'🔎 查詢常見問題',found:'示範知識庫回答',no:'示範知識庫中找不到已確認答案，請向店員詢問。',staff:'出示給店員確認'},
+ ja:{ask:'🔎 よくある質問を検索',found:'サンプルFAQの回答',no:'確認済みの回答が見つかりません。スタッフにご相談ください。',staff:'スタッフに確認する'},
+ ko:{ask:'🔎 자주 묻는 질문 검색',found:'예시 FAQ 답변',no:'확인된 답변을 찾지 못했습니다. 직원에게 문의해 주세요.',staff:'직원에게 확인하기'},
+ th:{ask:'🔎 ค้นหาคำถามที่พบบ่อย',found:'คำตอบตัวอย่างจาก FAQ',no:'ไม่พบคำตอบที่ยืนยันแล้ว กรุณาสอบถามพนักงาน',staff:'ให้พนักงานตรวจสอบ'},
+ vi:{ask:'🔎 Tra cứu câu hỏi thường gặp',found:'Câu trả lời FAQ mẫu',no:'Không tìm thấy câu trả lời đã được xác nhận. Vui lòng hỏi nhân viên.',staff:'Nhờ nhân viên xác nhận'}
+};
+function normalizeQuestion(str){return str.toLocaleLowerCase().normalize('NFKC').replace(/[\s.,!?？！，。・:：]/g,'').trim();}
+function askKnowledge(){
+ const q=document.getElementById('question').value.trim(),p=document.getElementById('answerPanel');
+ if(!q){document.getElementById('question').focus();return;}
+ const needle=normalizeQuestion(q);
+ // Only match near-exact known FAQ prompts. Never synthesize a store policy.
+ const match=faq.find(f=>Object.values(f.q).some(v=>{const known=normalizeQuestion(v);return needle===known||(needle.length>=9&&known.includes(needle)&&needle.length/known.length>.75)}));
+ const l=searchLabels[lang]||searchLabels.en;p.style.display='block';p.replaceChildren();
+ const heading=document.createElement('strong');heading.textContent=match?l.found:l.no;p.appendChild(heading);
+ if(match){const ans=document.createElement('p');ans.style.lineHeight='1.65';ans.textContent=match.a[lang]||match.a.en;p.appendChild(ans);}
+ const btn=document.createElement('button');btn.className='secondary';btn.textContent=l.staff;btn.onclick=showStaff;p.appendChild(btn);
+}
+// Optional production backend: a deployment may provide POST /api/chat. Never expose an API key in this HTML file.
+const CHAT_API_PATH='/api/chat';
+const messages=[];
+const chatCopy={
+ en:{you:'You',assistant:'BakeMate',ask:'💬 Ask a question',fail:'A secure AI service is not connected yet. I can search the sample FAQ or help you ask the staff.',loading:'Checking your question…',source:'Sample FAQ (not AI)'},
+ zh:{you:'你',assistant:'BakeMate',ask:'💬 詢問問題',fail:'尚未連接安全的 AI 服務，目前可查詢示範 FAQ 或請店員協助。',loading:'正在查詢……',source:'示範 FAQ（非 AI）'},
+ ja:{you:'あなた',assistant:'BakeMate',ask:'💬 質問する',fail:'AIサービスはまだ接続されていません。サンプルFAQの検索やスタッフへの相談ができます。',loading:'確認中…',source:'サンプルFAQ（AIではありません）'},
+ ko:{you:'사용자',assistant:'BakeMate',ask:'💬 질문하기',fail:'AI 서비스가 아직 연결되지 않았습니다. 예시 FAQ를 검색하거나 직원에게 문의하세요.',loading:'확인 중…',source:'예시 FAQ (AI 아님)'},
+ th:{you:'คุณ',assistant:'BakeMate',ask:'💬 ถามคำถาม',fail:'ยังไม่ได้เชื่อมต่อบริการ AI สามารถค้นหาคำถามตัวอย่างหรือถามพนักงานได้',loading:'กำลังตรวจสอบ…',source:'FAQ ตัวอย่าง (ไม่ใช่ AI)'},
+ vi:{you:'Bạn',assistant:'BakeMate',ask:'💬 Đặt câu hỏi',fail:'Chưa kết nối dịch vụ AI. Bạn có thể tìm FAQ mẫu hoặc nhờ nhân viên hỗ trợ.',loading:'Đang kiểm tra…',source:'FAQ mẫu (không phải AI)'}
+};
+function appendBubble(kind,text,source){const area=document.getElementById('chatHistory');const node=document.createElement('div');node.className='bubble '+kind;const small=document.createElement('small');small.textContent=source||chatCopy[lang][kind==='user'?'you':'assistant'];const body=document.createElement('div');body.textContent=text;node.append(small,body);area.appendChild(node);return body;}
+async function askSmart(){
+ const textarea=document.getElementById('question'),q=textarea.value.trim();if(!q){textarea.focus();return;}
+ appendBubble('user',q);textarea.value='';
+ const needle=normalizeQuestion(q);const match=faq.find(f=>Object.values(f.q).some(v=>{const known=normalizeQuestion(v);return needle===known||(needle.length>=9&&known.includes(needle)&&needle.length/known.length>.75)}));
+ if(match){appendBubble('assistant',match.a[lang]||match.a.en,chatCopy[lang].source);return;}
+ const wait=appendBubble('assistant',chatCopy[lang].loading);
+ try{
+  // The browser only calls a same-origin server endpoint. The secret AI credential belongs on the server.
+  const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),8000);
+  let response;try{response=await fetch(CHAT_API_PATH,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:q,language:lang}),signal:controller.signal});}finally{clearTimeout(timeout)}
+  if(!response.ok)throw new Error('backend unavailable');
+  const data=await response.json();if(!data||typeof data.answer!=='string'||!data.answer.trim())throw new Error('invalid response');
+  wait.textContent=data.answer;
+ }catch(err){wait.textContent=chatCopy[lang].fail;}
+}
+function updateAskButton(){document.getElementById('askKnowledgeButton').textContent=(chatCopy[lang]||chatCopy.en).ask;document.getElementById('answerPanel').style.display='none'}
+function showStaff(){document.getElementById("staffPhotoWrap").hidden=true;const text=document.getElementById('question').value.trim();if(!text){document.getElementById('question').focus();return}currentStaffText=text;document.getElementById('staffOriginal').textContent=text;document.getElementById('staffChinese').textContent=lang==='zh'?text:'尚未自動翻譯。請點下方按鈕使用 Google 翻譯取得中文。';go('staff')}
+function googleUrl(text){const code=lang==='zh'?'zh-TW':lang;return 'https://translate.google.com/?sl='+encodeURIComponent(code)+'&tl=zh-TW&text='+encodeURIComponent(text)+'&op=translate'}
+const inlineLabels={
+en:['Translate on this page','Translation direction','English → Traditional Chinese','Traditional Chinese → English','TRANSLATION RESULT','Copy translation','Show to staff','Translating…','Could not translate. Please try again.','Demo uses the third-party MyMemory translation service. Do not enter personal or sensitive information. Confirm allergy and safety details with staff.'],
+zh:['在網頁內翻譯','翻譯方向','中文 → 中文','繁體中文 → 繁體中文','翻譯結果','複製翻譯','出示給店員','翻譯中…','翻譯失敗，請稍後重試。','示範版使用第三方 MyMemory 翻譯服務，請勿輸入個資或敏感資訊；過敏原與安全問題請由店員確認。'],
+ja:['ページ内で翻訳','翻訳方向','日本語 → 繁体字中国語','繁体字中国語 → 日本語','翻訳結果','翻訳をコピー','スタッフに見せる','翻訳中…','翻訳できませんでした。もう一度お試しください。','デモでは外部翻訳サービス MyMemory を使用します。個人情報や機密情報を入力しないでください。アレルギー等はスタッフにご確認ください。'],
+ko:['이 페이지에서 번역','번역 방향','한국어 → 번체 중국어','번체 중국어 → 한국어','번역 결과','번역 복사','직원에게 보여주기','번역 중…','번역에 실패했습니다. 다시 시도하세요.','데모에서 외부 MyMemory 번역 서비스를 이용합니다. 개인정보 또는 민감한 정보를 입력하지 마세요. 알레르기 및 안전 정보는 직원에게 확인하세요.'],
+th:['แปลในหน้านี้','ทิศทางการแปล','ไทย → จีนตัวเต็ม','จีนตัวเต็ม → ไทย','ผลการแปล','คัดลอกคำแปล','แสดงให้พนักงาน','กำลังแปล…','ไม่สามารถแปลได้ โปรดลองอีกครั้ง','เดโมใช้บริการแปลภายนอก MyMemory อย่าป้อนข้อมูลส่วนบุคคลหรือข้อมูลอ่อนไหว และโปรดสอบถามพนักงานเกี่ยวกับการแพ้อาหารและความปลอดภัย'],
+vi:['Dịch ngay trên trang','Hướng dịch','Tiếng Việt → Tiếng Trung phồn thể','Tiếng Trung phồn thể → Tiếng Việt','KẾT QUẢ DỊCH','Sao chép bản dịch','Cho nhân viên xem','Đang dịch…','Không thể dịch. Vui lòng thử lại.','Bản demo sử dụng dịch vụ bên thứ ba MyMemory. Không nhập thông tin cá nhân hoặc nhạy cảm. Hãy xác nhận thông tin dị ứng và an toàn với nhân viên.']
+};
+let latestInlineTranslation='',latestInlineOriginal='',latestTarget='zh-TW';
+function renderInlineTranslator(){
+  const u=inlineLabels[lang]||inlineLabels.en;
+  document.getElementById('inlineTranslateButton').textContent=u[0]+' →';
+  document.getElementById('directionLabel').textContent=u[1];
+  const sel=document.getElementById('translateDirection'); const old=sel.value||'toStaff';
+  sel.replaceChildren();
+  for(const [v,label] of [['toStaff',u[2]],['fromStaff',u[3]]]){
+    const opt=document.createElement('option');opt.value=v;opt.textContent=label;sel.append(opt);
+  }
+  sel.value=old;
+  document.getElementById('resultLabel').textContent=u[4];
+  document.getElementById('copyTranslationButton').textContent='📋 '+u[5];
+  document.getElementById('showTranslationStaffButton').textContent='👩‍🍳 '+u[6];
+  document.getElementById('inlinePrivacy').textContent=u[9];
+}
+function resetInlineTranslation(){latestInlineTranslation='';document.getElementById('translationOutput').style.display='none'}
+async function translateInside(){
+ const text=document.getElementById('translateText').value.trim();
+ if(!text){document.getElementById('translateText').focus();return}
+ const direction=document.getElementById('translateDirection').value;
+ const source=direction==='toStaff'?(lang==='zh'?'zh-TW':lang):'zh-TW';
+ const target=direction==='toStaff'?'zh-TW':(lang==='zh'?'zh-TW':lang);
+ const button=document.getElementById('inlineTranslateButton');
+ const out=document.getElementById('translatedContent');
+ const labels=inlineLabels[lang]||inlineLabels.en;
+ button.disabled=true;button.textContent=labels[7];
+ document.getElementById('translationOutput').style.display='block';
+ latestInlineTranslation='';latestInlineOriginal=text;latestTarget=target;
+ out.textContent=labels[7];
+ try{
+   if(source===target){latestInlineTranslation=text;out.textContent=text;return}
+   if(text.length>450)throw new Error('This demo supports up to 450 characters per request.');
+   const query=new URLSearchParams({q:text,langpair:source+'|'+target});
+   const res=await fetch('https://api.mymemory.translated.net/get?'+query.toString(),{headers:{Accept:'application/json'}});
+   if(!res.ok)throw new Error('HTTP '+res.status);
+   const data=await res.json();
+   const translated=data?.responseData?.translatedText;
+   if(Number(data.responseStatus)>=400||typeof translated!=='string'||!translated.trim()||translated.includes('MYMEMORY WARNING'))throw new Error('No translation available');
+   latestInlineTranslation=translated.replace(/&amp;/g,'&').replace(/&quot;/g,'"').replace(/&#39;/g,"'");
+   out.textContent=latestInlineTranslation;
+ }catch(err){out.textContent=labels[8]+' ('+err.message+')';}
+ finally{button.disabled=false;button.textContent=labels[0]+' →'}
+}
+function copyTranslation(){
+ if(!latestInlineTranslation)return;
+ if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(latestInlineTranslation).catch(()=>window.prompt('Copy:',latestInlineTranslation));
+ else window.prompt('Copy:',latestInlineTranslation);
+}
+function translatedToStaff(){
+ if(!latestInlineTranslation)return;
+ document.getElementById('staffPhotoWrap').hidden=true;
+ currentStaffText=latestInlineOriginal;
+ document.getElementById('staffOriginal').textContent=latestInlineOriginal;
+ document.getElementById('staffChinese').textContent=latestTarget==='zh-TW'?latestInlineTranslation:'(Translation) '+latestInlineTranslation;
+ go('staff');
+}
+function openGoogle(){const text=document.getElementById('translateText').value.trim();if(!text)return document.getElementById('translateText').focus();window.open(googleUrl(text),'_blank','noopener,noreferrer')}
+function openGoogleFromStaff(){if(currentStaffText)window.open(googleUrl(currentStaffText),'_blank','noopener,noreferrer')}
+function previewPhoto(e){const f=e.target.files?.[0];if(!f)return;const img=document.getElementById('preview');if(img.dataset.url)URL.revokeObjectURL(img.dataset.url);img.dataset.url=URL.createObjectURL(f);img.src=img.dataset.url;img.hidden=false}
+
+function selectFrame(id){memoryFrame=id;renderMemoryDesigner();}
+function toggleSticker(sticker){
+  ensureStickerPositions();
+  const existingIndex=selectedStickers.indexOf(sticker);
+  if(existingIndex>-1){
+    selectedStickers.splice(existingIndex,1);
+    stickerPositions.splice(existingIndex,1);
+    stickerPositions.push({x:0.84,y:0.90});
+  } else {
+    if(selectedStickers.length>=4){selectedStickers.shift(); stickerPositions.shift();}
+    const defaults=[{x:0.12,y:0.70},{x:0.88,y:0.70},{x:0.16,y:0.90},{x:0.84,y:0.90}];
+    selectedStickers.push(sticker);
+    stickerPositions[selectedStickers.length-1]=defaults[selectedStickers.length-1]||{x:0.5,y:0.85};
+  }
+  renderMemoryDesigner();
+}
+function selectCaption(i){selectedCaption=i;renderMemoryDesigner();}
+function setMemoryPhoto(file){
+  const img=document.getElementById('memoryPreviewImg');
+  if(img.dataset.url) URL.revokeObjectURL(img.dataset.url);
+  img.dataset.url=URL.createObjectURL(file);
+  img.src=img.dataset.url;
+  img.hidden=false;
+  document.getElementById('memoryPlaceholder').hidden=true;
+}
+function previewMemoryPhoto(e){
+  const file=e.target.files?.[0];
+  if(file) setMemoryPhoto(file);
+}
+function usePhotoHelpImage(){
+  const file=document.getElementById('photoInput').files?.[0];
+  if(file) setMemoryPhoto(file);
+}
+function renderMemoryDesigner(){
+  const ui=memoryUI[lang]||memoryUI.en;
+  document.getElementById('memoryMainTitle').textContent=ui.main;
+  document.getElementById('memoryMainIntro').textContent=ui.intro;
+  document.getElementById('memoryUploadTitle').textContent=ui.upload;
+  document.getElementById('usePreviousPhotoBtn').textContent=ui.usePrev;
+  document.getElementById('memoryUploadNote').textContent=ui.uploadNote;
+  document.getElementById('memoryFrameTitle').textContent=ui.frame;
+  document.getElementById('memoryStickerTitle').textContent=ui.sticker;
+  document.getElementById('memoryStickerNote').textContent=ui.stickerNote;
+  document.getElementById('memoryCaptionTitle').textContent=ui.caption;
+  document.getElementById('memoryFontTitle').textContent=ui.font;
+  document.getElementById('memoryFontNote').textContent=ui.fontNote;
+  document.getElementById('memoryPreviewTitle').textContent=ui.preview;
+  document.getElementById('memoryPreviewNote').textContent=ui.previewNote;
+  document.getElementById('memoryDoneBtn').textContent=({en:'Confirm card →',zh:'確認卡片 →',ja:'カードを確認 →',ko:'카드 확인 →',th:'ยืนยันการ์ด →',vi:'Xác nhận thẻ →'}[lang]);
+  if(document.getElementById('memoryPlaceholder').hidden!==true) document.getElementById('memoryPlaceholder').textContent=ui.placeholder;
+  const frameWrap=document.getElementById('frameOptions'); frameWrap.replaceChildren();
+  memoryFrames.forEach(f=>{const b=document.createElement('button'); b.className='option-card'+(memoryFrame===f.id?' active':''); b.onclick=()=>selectFrame(f.id); if(f.img){const thumb=document.createElement('img'); thumb.className='frame-thumb'; thumb.src=f.img; thumb.alt=f.label[lang]||f.label.en; b.appendChild(thumb);} const name=document.createElement('b'); name.textContent=f.label[lang]||f.label.en; const desc=document.createElement('small'); desc.textContent=f.desc[lang]||f.desc.en; b.append(name,desc); frameWrap.appendChild(b);});
+  const stickerWrap=document.getElementById('stickerOptions'); stickerWrap.replaceChildren();
+  memoryStickerChoices.forEach(s=>{const b=document.createElement('button'); b.className='sticker-btn'+(selectedStickers.includes(s)?' active':''); b.textContent=s; b.onclick=()=>toggleSticker(s); stickerWrap.appendChild(b);});
+  const capWrap=document.getElementById('captionOptions'); capWrap.replaceChildren();
+  const caps=memoryCaptions[lang]||memoryCaptions.en;
+  const customIndex=caps.length;
+  if(selectedCaption>customIndex) selectedCaption=0;
+  caps.forEach((c,i)=>{const b=document.createElement('button'); b.className='caption-btn'+(selectedCaption===i?' active':''); b.textContent=c; b.onclick=()=>selectCaption(i); capWrap.appendChild(b);});
+  const customBtn=document.createElement('button'); customBtn.className='caption-btn'+(selectedCaption===customIndex?' active':''); customBtn.textContent='✍️ '+ui.customOption; customBtn.onclick=()=>selectCaption(customIndex); capWrap.appendChild(customBtn);
+  const customWrap=document.createElement('div'); customWrap.className='custom-caption-wrap'; customWrap.hidden=selectedCaption!==customIndex; const customInput=document.createElement('input'); customInput.id='customCaptionInput'; customInput.placeholder=ui.customPlaceholder; customInput.value=customCaption; customInput.maxLength=28; customInput.oninput=(e)=>{customCaption=e.target.value; document.getElementById('memoryCaptionText').textContent=(customCaption.trim()||ui.customOption);}; const customSmall=document.createElement('small'); customSmall.textContent=ui.customNote; customWrap.append(customInput,customSmall); capWrap.appendChild(customWrap);
+  const fontWrap=document.getElementById('fontOptions'); fontWrap.replaceChildren();
+  memoryFontChoices.forEach(item=>{const b=document.createElement('button'); b.className='font-option '+item.cls+(selectedFont===item.id?' active':''); b.onclick=()=>selectFont(item.id); const name=document.createElement('b'); name.textContent=item.label[lang]||item.label.en; const desc=document.createElement('small'); desc.textContent=item.desc[lang]||item.desc.en; b.append(name,desc); fontWrap.appendChild(b);});
+  const card=document.getElementById('polaroidCard');
+  const selectedFrame = memoryFrames.find(f=>f.id===memoryFrame);
+  if(selectedFrame && selectedFrame.img){
+    card.className='polaroid-card frame-image-mode';
+    card.style.backgroundImage='url('+selectedFrame.img+')';
+  } else {
+    card.className='polaroid-card frame-'+memoryFrame;
+    card.style.backgroundImage='';
+  }
+  const captionEl=document.getElementById('memoryCaptionText');
+  const subEl=card.querySelector('.polaroid-sub');
+  const finalCaption = selectedCaption===customIndex ? (customCaption.trim()||ui.customOption) : caps[selectedCaption];
+  captionEl.textContent=finalCaption;
+  captionEl.className='polaroid-caption '+fontClassForSelection();
+  if(selectedFrame && selectedFrame.id==='black_generated'){
+    captionEl.style.color='#ffffff';
+    captionEl.style.textShadow='0 1px 3px rgba(0,0,0,.35)';
+    subEl.style.color='rgba(255,255,255,.88)';
+  }else{
+    captionEl.style.color='';
+    captionEl.style.textShadow='';
+    subEl.style.color='';
+  }
+  updateStickerElements();
+  ['stick1','stick2','stick3','stick4'].forEach(id=>{const el=document.getElementById(id); if(!el.dataset.dragBound){el.dataset.dragBound='1'; el.addEventListener('pointerdown',startStickerDrag);}});
+}
+
+
+const finishText={
+ en:['Your memory card is ready!','Download your card and show the file to staff for printing.','Selected design','Download card PNG','Edit card','Your image is not sent to staff automatically. Show the saved file to staff.','Your photo stays on this device; no server upload in this demo.','Please add a photo first.'],
+ zh:['你的紀念卡準備好了！','請下載圖片，再交由店員協助列印。','選擇的樣式','下載卡片 PNG','返回修改','此示範不會自動傳給店員，請出示已下載的圖片。','本示範只在裝置上處理照片，不會上傳伺服器。','請先上傳照片。'],
+ ja:['記念カードが完成！','画像を保存し、印刷時にスタッフへ見せてください。','選択したデザイン','PNGを保存','編集に戻る','スタッフへの自動送信はありません。保存した画像を見せてください。','写真は端末内で処理されます。','写真を追加してください。'],
+ ko:['기념 카드 완성!','이미지를 저장하고 직원에게 보여주세요.','선택한 디자인','PNG 다운로드','카드 수정','직원에게 자동 전송되지 않습니다. 저장한 이미지를 보여주세요.','사진은 기기 내에서만 처리됩니다.','사진을 먼저 추가하세요.'],
+ th:['การ์ดที่ระลึกพร้อมแล้ว!','ดาวน์โหลดภาพแล้วแสดงให้พนักงานเพื่อพิมพ์','รูปแบบที่เลือก','ดาวน์โหลด PNG','แก้ไขการ์ด','ไม่ได้ส่งภาพให้พนักงานอัตโนมัติ กรุณาแสดงไฟล์ที่บันทึก','รูปภาพประมวลผลบนอุปกรณ์เท่านั้น','กรุณาเพิ่มรูปภาพก่อน'],
+ vi:['Thẻ kỷ niệm đã sẵn sàng!','Tải ảnh và đưa nhân viên xem để in.','Thiết kế đã chọn','Tải PNG','Sửa thẻ','Không tự động gửi cho nhân viên. Hãy đưa ảnh đã lưu cho nhân viên xem.','Ảnh chỉ được xử lý trên thiết bị.','Vui lòng thêm ảnh trước.']
+};
+function cardCaption(){const a=memoryCaptions[lang]||memoryCaptions.en;return selectedCaption===a.length?(customCaption.trim()||'I made it!'):(a[selectedCaption]||a[0]);}
+function renderPrintConfirm(){const u=finishText[lang]||finishText.en;['confirmTitle','confirmIntro','confirmReviewTitle','downloadMemoryBtn','editMemoryBtn','printStatus','printPrivacy'].forEach((id,i)=>document.getElementById(id).textContent=u[i]);const f=memoryFrames.find(f=>f.id===memoryFrame);document.getElementById('confirmReview').textContent=(f.label[lang]||f.label.en)+' · '+cardCaption();}
+function loadCardImage(src){return new Promise((yes,no)=>{const image=new Image();image.onload=()=>yes(image);image.onerror=no;image.src=src;});}
+function coverDraw(ctx,im,x,y,w,h){const f=Math.max(w/im.width,h/im.height),sw=w/f,sh=h/f;ctx.drawImage(im,(im.width-sw)/2,(im.height-sh)/2,sw,sh,x,y,w,h);}
+async function exportMemoryPNG(){
+ const u=finishText[lang]||finishText.en,photoEl=document.getElementById('memoryPreviewImg');
+ if(photoEl.hidden||!photoEl.src){document.getElementById('printStatus').textContent=u[7];return;}
+ const button=document.getElementById('downloadMemoryBtn');button.disabled=true;
+ try{
+ if(document.fonts?.ready)await document.fonts.ready;
+ const cv=document.createElement('canvas');cv.width=1200;cv.height=1800;const c=cv.getContext('2d');
+ const f=memoryFrames.find(f=>f.id===memoryFrame),photo=await loadCardImage(photoEl.src);
+ c.fillStyle=f.id==='black_generated'?'#222222':'#ffffff';c.fillRect(0,0,1200,1800);
+ if(f.img){coverDraw(c,photo,96,112,1008,1104);c.drawImage(await loadCardImage(f.img),0,0,1200,1800);}else{
+  const palette={classic:'#ffffff',cream:'#fff8f0',caramel:'#eed8c3',cute:'#fff1f7'};c.fillStyle=palette[memoryFrame]||'#ffffff';c.fillRect(0,0,1200,1800);coverDraw(c,photo,60,60,1080,1250);
+ }
+ c.fillStyle=f.id==='black_generated'?'white':'#604330';c.textAlign='center';c.textBaseline='middle';
+ let size=lang==='en'?110:72,msg=cardCaption();
+ while(size>35){c.font=fontStringForCanvas(size,true);if(c.measureText(msg).width<980)break;size-=4;}
+ if(selectedFont==='script'&&lang==='zh'){
+   c.save();c.translate(600,1490);c.rotate(-2*Math.PI/180);
+   c.font=fontStringForCanvas(size,false);
+   c.fillText(msg,0,0,980);c.restore();
+ }else{c.fillText(msg,600,1490,980);}
+ c.font='30px sans-serif';c.fillStyle=f.id==='black_generated'?'#eee':'#806f5f';c.fillText('BAKEMATE AI · DIY SWEET MEMORY',600,1630,950);
+ c.font='70px sans-serif';ensureStickerPositions();selectedStickers.forEach((v,i)=>{const pos=stickerPositions[i];if(pos&&v)c.fillText(v,pos.x*1200,pos.y*1800);});
+ const blob=await new Promise(r=>cv.toBlob(r,'image/png'));if(!blob)throw Error('PNG failed');const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='BakeMate_Memory_Card.png';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);document.getElementById('printStatus').textContent=u[5];
+ }catch(e){document.getElementById('printStatus').textContent='Export failed: '+e.message;}finally{button.disabled=false;}
+}
+
+drawLanguages();updateText();
+</script></body></html>
